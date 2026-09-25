@@ -1,0 +1,7 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://dghbgrn1innk8"]
+
+[ext_resource type="Shader" uid="uid://dwlrmje5ddve3" path="res://DD2ModConfig_Asset/Monster_Death/Texture/Death_WPN_Outline_Shader.gdshader" id="1_f7bre"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_f7bre")

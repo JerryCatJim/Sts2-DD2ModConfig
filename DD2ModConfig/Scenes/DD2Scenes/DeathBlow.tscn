@@ -1,0 +1,57 @@
+[gd_scene load_steps=5 format=3 uid="uid://cx6fsxojrqple"]
+
+[ext_resource type="Texture2D" uid="uid://jhayupvo8fn6" path="res://Flagellant/Images/DD2Images/death_stamp_ring_01.png" id="1_cx042"]
+[ext_resource type="Texture2D" uid="uid://c5e4pp04ce3tr" path="res://Flagellant/Images/DD2Images/ui_fight_start_splash.png" id="2_8mk0g"]
+
+[sub_resource type="Animation" id="Animation_xksaj"]
+resource_name = "Show"
+length = 1.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DeathBlowBg:modulate:a")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 1, 1.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 1.0, 1.0, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DeathBlowBg:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0.9, 0.9), Vector2(0.9, 0.9), Vector2(0.45, 0.45)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_f0wjc"]
+_data = {
+&"Show": SubResource("Animation_xksaj")
+}
+
+[node name="DeathBlowNode" type="Node2D"]
+
+[node name="DeathBlowBg" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0)
+rotation = -0.7853982
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("2_8mk0g")
+
+[node name="DeathBlowIcon" type="Sprite2D" parent="DeathBlowBg"]
+position = Vector2(0, -25.455845)
+rotation = 0.7853982
+scale = Vector2(0.33333334, 0.33333334)
+texture = ExtResource("1_cx042")
+
+[node name="DeathBlowAnimPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+&"": SubResource("AnimationLibrary_f0wjc")
+}

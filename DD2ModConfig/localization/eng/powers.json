@@ -1,0 +1,20 @@
+{
+  "DD2MODCONFIG-STRESS_POWER.title": "Stress",
+  "DD2MODCONFIG-STRESS_POWER.description": "When you gain 10 [gold]Stress[/gold], enter a random [blue]Resolute[/blue] or [red]Meltdown[/red].\nDD2ModConfig will only enter [gold]Toxic[/gold].",
+  "DD2MODCONFIG-STRESS_POWER.smartDescription": "Enter a random [blue]Resolute[/blue] or [red]Meltdown[/red] after gaining 10 [gold]Stress[/gold].\nDD2ModConfig will only enter [gold]Toxic[/gold].",
+  "DD2MODCONFIG-RESOLUTE_OR_MELTDOWN_POWER_MODEL.title": "The base classes of Resolute and Meltdown, which should not be displayed on the game view.",
+  "DD2MODCONFIG-RESOLUTE_OR_MELTDOWN_POWER_MODEL.description": "The base classes of Resolute and Meltdown, which should not be displayed on the game view.",
+  "DD2MODCONFIG-RESOLUTE_OR_MELTDOWN_POWER_MODEL.smartDescription": "The base classes of Resolute and Meltdown, which should not be displayed on the game view.",
+  "DD2MODCONFIG-COMBO_POWER.title": "Combo",
+  "DD2MODCONFIG-COMBO_POWER.description": "Some cards deal additional effects to a target with [gold]Combo[/gold], then remove this Token after those effects take effect.",
+  "DD2MODCONFIG-COMBO_POWER.smartDescription": "When targeted, triggers additional effects of cards.",
+  "DD2MODCONFIG-ADD_COMBO_POWER.title": "Add Combo",
+  "DD2MODCONFIG-ADD_COMBO_POWER.description": "The next [blue]X[/blue] Attack cards you play apply [gold]Combo[/gold] to enemies.",
+  "DD2MODCONFIG-ADD_COMBO_POWER.smartDescription": "The next [blue]{Amount}[/blue] Attack cards you play apply [gold]Combo[/gold] to enemies.",
+  "DD2MODCONFIG-SPAWN_DEATH_POWER.title": "Death Comes...",
+  "DD2MODCONFIG-SPAWN_DEATH_POWER.description": "Death Comes...",
+  "DD2MODCONFIG-SPAWN_DEATH_POWER.smartDescription": "Death Comes...",
+  "DD2MODCONFIG-DEATH_ARMOR_POWER.title": "Death Armor",
+  "DD2MODCONFIG-DEATH_ARMOR_POWER.description": "Protects against [blue]X[/blue] [red]Deathblow[/red].",
+  "DD2MODCONFIG-DEATH_ARMOR_POWER.smartDescription": "Protects against [blue]{Amount}[/blue] [red]Deathblow[/red]."
+}

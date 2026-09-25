@@ -1,0 +1,8 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://0i26vo7857ka"]
+
+[ext_resource type="Shader" uid="uid://cw2rcryx3s8ys" path="res://DD2ModConfig_Asset/Monster_Death/Shader/SpawnMask.gdshader" id="1_jt4a5"]
+
+[resource]
+shader = ExtResource("1_jt4a5")
+shader_parameter/rect_min = Vector2(0, 0.88)
+shader_parameter/rect_max = Vector2(1, 1)

@@ -1,0 +1,8 @@
+{
+  "DD2MODCONFIG-DEATHS_HEAD.title": "Death's Head",
+  "DD2MODCONFIG-DEATHS_HEAD.flavor": "[red]You can run...But no can hide![/red]",
+  "DD2MODCONFIG-DEATHS_HEAD.description": "When your HP would be reduced to [blue]0[/blue], heal to [green]{Heal}%[/green] of your Max HP instead (works once).",
+  "DD2MODCONFIG-STRESS_COUNTER_RELIC.title": "Stress Counter",
+  "DD2MODCONFIG-STRESS_COUNTER_RELIC.flavor": "[red]Ruin has come to our family.[/red]",
+  "DD2MODCONFIG-STRESS_COUNTER_RELIC.description": "Record your current [gold]Stress[/gold]. At the end of combat, retain your [gold]Stress[/gold]."
+}

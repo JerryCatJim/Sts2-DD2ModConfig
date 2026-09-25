@@ -1,0 +1,11 @@
+[gd_resource type="StandardMaterial3D" load_steps=4 format=3 uid="uid://jpqnapguvf0a"]
+
+[ext_resource type="Texture2D" uid="uid://jji5xsj02324" path="res://DD2ModConfig_Asset/Monster_Death/Texture/tex_shared_death_col.png" id="1_iqfdi"]
+[ext_resource type="Texture2D" uid="uid://dou26wie4dobi" path="res://DD2ModConfig_Asset/Monster_Death/Texture/tex_shared_death_ink.png" id="2_pdge2"]
+[ext_resource type="Material" uid="uid://c3c2bmyug57mc" path="res://DD2ModConfig_Asset/Monster_Death/Texture/Death_Outline_Shader.tres" id="2_vbfgt"]
+
+[resource]
+next_pass = ExtResource("2_vbfgt")
+albedo_texture = ExtResource("1_iqfdi")
+rim_enabled = true
+rim_texture = ExtResource("2_pdge2")

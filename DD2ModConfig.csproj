@@ -1,0 +1,152 @@
+﻿<Project Sdk="Godot.NET.Sdk/4.5.1">
+	<PropertyGroup>
+		<TargetFramework>net9.0</TargetFramework>
+		<ImplicitUsings>true</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<!--Makes code analysis regarding null values stricter.-->
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<DefaultItemExcludes>packages/**</DefaultItemExcludes>
+		<AppOutputBase>$(MSBuildProjectDirectory)\</AppOutputBase>
+		<RootNamespace>DD2ModConfig</RootNamespace>
+		<PlatformTarget>AnyCPU</PlatformTarget>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<AssemblyVersion>0.0.1</AssemblyVersion>
+		<FileVersion>0.0.1</FileVersion>
+		<Version>0.0.1</Version>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+		<Optimize>false</Optimize>
+		<DebugType>portable</DebugType>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)' == 'Release'">
+		<Optimize>true</Optimize>
+		<DebugType>none</DebugType>
+		<PathMap>$(AppOutputBase)=.\</PathMap>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<TargetFramework>net9.0</TargetFramework>
+		<TargetFramework Condition=" '$(GodotTargetPlatform)' == 'android' ">net9.0</TargetFramework>
+		<EnableDynamicLoading>true</EnableDynamicLoading>
+		<!-- 离线/网络不稳时避免构建联网查包漏洞产生 NU1900 警告 -->
+		<NuGetAudit>false</NuGetAudit>
+	</PropertyGroup>
+
+	<!-- ===== Multi-version compatibility ===== -->
+	<PropertyGroup>
+		<!-- Default: build for 111; override with /p:Sts2ApiCompat=0.111.0 -->
+		<Sts2ApiCompat Condition="'$(Sts2ApiCompat)' == ''">0.111.0</Sts2ApiCompat>
+		<!-- Isolate output per version (both obj and bin) -->
+		<IntermediateOutputPath>.godot\mono\temp\obj\$(Configuration)\$(Sts2ApiCompat)\</IntermediateOutputPath>
+		<OutputPath>.godot\mono\temp\bin\$(Configuration)\$(Sts2ApiCompat)\</OutputPath>
+	</PropertyGroup>
+
+	<Import Project="build\DD2ModConfig.CompatDefines.targets" />
+
+	<!-- OS Detection -->
+	<PropertyGroup>
+		<IsWindows>false</IsWindows>
+		<IsLinux>false</IsLinux>
+		<IsOSX>false</IsOSX>
+		<IsWindows Condition="$([MSBuild]::IsOSPlatform('Windows'))">true</IsWindows>
+		<IsLinux Condition="$([MSBuild]::IsOSPlatform('Linux'))">true</IsLinux>
+		<IsOSX Condition="$([MSBuild]::IsOSPlatform('OSX'))">true</IsOSX>
+	</PropertyGroup>
+
+
+	<!-- Windows -->
+	<PropertyGroup Condition="'$(IsWindows)' == 'true'">
+		<GodotPath Condition="'$(GodotPath)' == ''">$(GodotWinPath)</GodotPath>
+		<SteamLibraryPath Condition="'$(SteamLibraryPath)' == ''">$(SteamLibraryWinPath)</SteamLibraryPath>
+		<Sts2Path Condition="'$(Sts2Path)' == ''">$(SteamLibraryPath)/common/Slay the Spire 2</Sts2Path>
+		<ModsPath Condition="'$(ModsPath)' == ''">$(Sts2Path)/mods/</ModsPath>
+		<Sts2DataDir Condition="'$(Sts2DataDir)' == ''">$(Sts2Path)/data_sts2_windows_x86_64</Sts2DataDir>
+	</PropertyGroup>
+
+	<!-- Linux -->
+	<PropertyGroup Condition="'$(IsLinux)' == 'true'">
+		<SteamLibraryPath Condition="'$(SteamLibraryPath)' == ''">$(SteamLibraryLinuxPath)</SteamLibraryPath>
+		<GodotPath Condition="'$(GodotPath)' == ''">$(GodotLinuxPath)</GodotPath>
+		<Sts2Path Condition="'$(Sts2Path)' == ''">$(SteamLibraryPath)/common/Slay the Spire 2</Sts2Path>
+		<ModsPath Condition="'$(ModsPath)' == ''">$(Sts2Path)/mods/</ModsPath>
+		<Sts2DataDir Condition="'$(Sts2DataDir)' == ''">$(Sts2Path)/data_sts2_linuxbsd_x86_64</Sts2DataDir>
+	</PropertyGroup>
+
+	<!-- macOS -->
+	<PropertyGroup Condition="'$(IsOSX)' == 'true'">
+		<SteamLibraryPath Condition="'$(SteamLibraryPath)' == ''">$(SteamLibraryMacPath)</SteamLibraryPath>
+		<GodotPath Condition="'$(GodotPath)' == ''">$(GodotMacPath)</GodotPath>
+		<Sts2Path Condition="'$(Sts2Path)' == ''">$(SteamLibraryPath)/common/Slay the Spire 2</Sts2Path>
+		<ModsPath Condition="'$(ModsPath)' == ''">$(Sts2Path)/SlayTheSpire2.app/Contents/MacOS/mods/</ModsPath>
+		<!-- macOS 的 data 目录可能是 arm64 或 x86_64 -->
+		<Sts2DataDir Condition="Exists('$(Sts2Path)/SlayTheSpire2.app/Contents/Resources/data_sts2_macos_arm64')">$(Sts2Path)/SlayTheSpire2.app/Contents/Resources/data_sts2_macos_arm64</Sts2DataDir>
+		<Sts2DataDir Condition="'$(Sts2DataDir)' == ''">$(Sts2Path)/SlayTheSpire2.app/Contents/Resources/data_sts2_macos_x86_64</Sts2DataDir>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<!-- Disable architecture mismatch warning -->
+		<NoWarn>$(NoWarn);MSB3270</NoWarn>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Reference Include="0Harmony">
+			<HintPath>$(Sts2DataDir)/0Harmony.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+		<!-- <Reference Include="BaseLib">
+      <HintPath>$(BaseLibPath)/BaseLib.dll</HintPath>
+    </Reference> -->
+		<!-- NuGet获取，注意版本是否一致，不一致手动更改Version -->
+		<PackageReference Include="Alchyr.Sts2.BaseLib" Version="*" />
+		<Reference Include="GodotSharp">
+			<HintPath>$(Sts2DataDir)/GodotSharp.dll</HintPath>
+		</Reference>
+		<Reference Include="sts2">
+			<HintPath>$(Sts2DataDir)/sts2.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+		<Reference Include="SmartFormat">
+			<HintPath>$(Sts2DataDir)/SmartFormat.dll</HintPath>
+			<Private>false</Private>
+		</Reference>
+		<PackageReference Include="Alchyr.Sts2.ModAnalyzers" Version="0.1.9" />
+		<AdditionalFiles Include="DD2ModConfig/localization/**/*.json" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Content Include=".editorconfig" />
+		<Content Include="DD2ModConfig_Template.json" />
+	</ItemGroup>
+
+	<Target Name="GenerateModJson" BeforeTargets="CopyToModsFolderOnBuild">
+		<ReadLinesFromFile File="DD2ModConfig_Template.json">
+			<Output TaskParameter="Lines" ItemName="JsonLines" />
+		</ReadLinesFromFile>
+		<WriteLinesToFile File="DD2ModConfig.json" Lines="@(JsonLines-&gt;Replace('$VERSION$', '$(Version)'))" Overwrite="true" />
+	</Target>
+	<Target Name="CopyToModsFolderOnBuild" AfterTargets="PostBuildEvent">
+		<Message Text="Copying .dll and manifest to mods folder." Importance="high" />
+		<!--Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ModsPath)$(MSBuildProjectName)/lib/$(Sts2ApiCompat)" /-->
+		<Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ModsPath)$(MSBuildProjectName)/" />
+		<Copy SourceFiles="DD2ModConfig.json" DestinationFolder="$(ModsPath)$(MSBuildProjectName)/" />
+
+		<Message Text="Copying BaseLib to mods folder." Importance="high" />
+		<ItemGroup>
+			<BaseLibFiles Include="$(BaseLibPath)/BaseLib.dll;$(BaseLibPath)/BaseLib.pck;$(BaseLibPath)/BaseLib.json;" />
+		</ItemGroup>
+		<Copy SourceFiles="@(BaseLibFiles)" DestinationFolder="$(ModsPath)BaseLib/" />
+	</Target>
+
+	<Target Name="GodotPublish" AfterTargets="Publish" Condition="'$(GodotPath)' != '' and Exists('$(GodotPath)') and '$(IsInnerGodotExport)' != 'true'">
+		<Message Text="Exporting Godot .pck to mods folder" Importance="high" />
+		<Exec Command="&quot;$(GodotPath)&quot; --headless --export-pack &quot;BasicExport&quot; &quot;$(ModsPath)$(MSBuildProjectName)/$(MSBuildProjectName).pck&quot;" EnvironmentVariables="IsInnerGodotExport=true;MSBUILDDISABLENODEREUSE=1" ContinueOnError="WarnAndContinue" />
+	</Target>
+
+	<Target Name="GodotPublishSkipped" AfterTargets="Publish" Condition="'$(GodotPath)' == '' or !Exists('$(GodotPath)')">
+		<Message Text="Skipping Godot .pck export because GodotPath is not configured." Importance="high" />
+	</Target>
+</Project>

@@ -1,0 +1,143 @@
+[gd_scene load_steps=9 format=3 uid="uid://dsjb0pxmkqrgg"]
+
+[ext_resource type="Texture2D" uid="uid://c24pmao2nm0ju" path="res://Flagellant/Images/Stress/icon_virtue.png" id="1_ajvgm"]
+[ext_resource type="Shader" uid="uid://cbbtrca0kjnys" path="res://Flagellant/Scenes/DD2Scenes/stress_dissolve_shader.gdshader" id="1_ofgqy"]
+[ext_resource type="Shader" uid="uid://cm6s8jy4qlh36" path="res://Flagellant/Scenes/DD2Scenes/stress_shine_shader.gdshader" id="1_s6647"]
+[ext_resource type="Texture2D" uid="uid://dy462tetcu41n" path="res://Flagellant/Scenes/DD2Scenes/stress_noise_texture_2d.tres" id="2_i1mhx"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_i1mhx"]
+shader = ExtResource("1_s6647")
+shader_parameter/radius = 0.4
+shader_parameter/softness = 0.1200000057
+shader_parameter/color = Color(1, 0.85, 0.7, 1)
+shader_parameter/brightness = 1.0
+shader_parameter/global_alpha = 0.400000019
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ute6k"]
+shader = ExtResource("1_ofgqy")
+shader_parameter/dissolve_texture = ExtResource("2_i1mhx")
+shader_parameter/dissolve_value = 1.0
+shader_parameter/burn_size = 0.2999999932944
+shader_parameter/burn_color = Color(0.24840015, 0.24840018, 0.24840012, 1)
+
+[sub_resource type="Animation" id="Animation_xksaj"]
+resource_name = "Show"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("StressDownIcon:modulate:a")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 1.3, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 1.0, 1.0, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("StressDownText:modulate:a")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.35, 1.2, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.0, 1.0, 1.0, 0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:modulate:a")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [1.0, 0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("StressDownIcon:material:shader_parameter/dissolve_value")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.8, 1.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [1.0, 1.0, 0.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("ColorRect:material:shader_parameter/global_alpha")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.5, 1, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.400000019, 0.30000001425, 0.10000000475, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_f0wjc"]
+_data = {
+&"Show": SubResource("Animation_xksaj")
+}
+
+[node name="StressDownNode" type="Node2D"]
+scale = Vector2(0.85, 0.85)
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_i1mhx")
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -128.0
+offset_top = -128.0
+offset_right = 128.0
+offset_bottom = 128.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="StressDownIcon" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0)
+material = SubResource("ShaderMaterial_ute6k")
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_ajvgm")
+
+[node name="StressDownText" type="Label" parent="."]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -32.0
+offset_top = -180.0
+offset_right = 32.0
+offset_bottom = -92.0
+grow_horizontal = 2
+pivot_offset = Vector2(32, 180)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_constants/outline_size = 1
+theme_override_constants/shadow_outline_size = 8
+theme_override_font_sizes/font_size = 64
+text = "2"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="StressDownAnimPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+&"": SubResource("AnimationLibrary_f0wjc")
+}

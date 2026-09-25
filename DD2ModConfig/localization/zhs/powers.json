@@ -1,0 +1,20 @@
+{
+  "DD2MODCONFIG-STRESS_POWER.title": "压力",
+  "DD2MODCONFIG-STRESS_POWER.description": "当你获得10点压力时，会进入随机[blue]美德[/blue]或[red]折磨[/red]状态。\n鞭笞者只会进入[gold]怨毒[gold]。",
+  "DD2MODCONFIG-STRESS_POWER.smartDescription": "满10点进入随机[blue]美德[/blue]或[red]折磨[/red]状态。\n鞭笞者只会进入[gold]怨毒[gold]。",
+  "DD2MODCONFIG-RESOLUTE_OR_MELTDOWN_POWER_MODEL.title": "美德和折磨的基类，不应该被展示到游戏界面。",
+  "DD2MODCONFIG-RESOLUTE_OR_MELTDOWN_POWER_MODEL.description": "美德和折磨的基类，不应该被展示到游戏界面。",
+  "DD2MODCONFIG-RESOLUTE_OR_MELTDOWN_POWER_MODEL.smartDescription": "美德和折磨的基类，不应该被展示到游戏界面。",
+  "DD2MODCONFIG-COMBO_POWER.title": "破绽",
+  "DD2MODCONFIG-COMBO_POWER.description": "部分卡牌可以对拥有[gold]破绽[/gold]的目标造成额外效果，并在额外效果生效后移除此标记。",
+  "DD2MODCONFIG-COMBO_POWER.smartDescription": "作为目标时触发卡牌的额外效果。",
+  "DD2MODCONFIG-ADD_COMBO_POWER.title": "给予破绽",
+  "DD2MODCONFIG-ADD_COMBO_POWER.description": "你打出的下[blue]X[/blue]张攻击牌会给予敌人[gold]破绽[/gold]。",
+  "DD2MODCONFIG-ADD_COMBO_POWER.smartDescription": "你打出的下[blue]{Amount}[/blue]张攻击牌会给予敌人[gold]破绽[/gold]。",
+  "DD2MODCONFIG-SPAWN_DEATH_POWER.title": "死神降临...",
+  "DD2MODCONFIG-SPAWN_DEATH_POWER.description": "死神降临...",
+  "DD2MODCONFIG-SPAWN_DEATH_POWER.smartDescription": "死神降临...",
+  "DD2MODCONFIG-DEATH_ARMOR_POWER.title": "死亡护甲",
+  "DD2MODCONFIG-DEATH_ARMOR_POWER.description": "可抵御[blue]X[/blue]次[red]致命伤害[/red]。",
+  "DD2MODCONFIG-DEATH_ARMOR_POWER.smartDescription": "可抵御[blue]{Amount}[/blue]次[red]致命伤害[/red]。"
+}

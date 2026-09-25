@@ -1,0 +1,20 @@
+{
+  "DD2MODCONFIG-STRESS_POWER.title": "Стресс",
+  "DD2MODCONFIG-STRESS_POWER.description": "Когда вы получаете 10 [gold]Стресс[/gold], войдите в случайное состояние [blue]Решительный[/blue] или [red]Срыв[/red].\nБич войдёт только в [gold]Токсичность[/gold].",
+  "DD2MODCONFIG-STRESS_POWER.smartDescription": "Войдите в случайное состояние [blue]Решительный[/blue] или [red]Срыв[/red] после получения 10 [gold]Стресс[/gold].\nБич войдёт только в [gold]Токсичность[/gold].",
+  "DD2MODCONFIG-RESOLUTE_OR_MELTDOWN_POWER_MODEL.title": "Базовые классы Решительного и Срыва, которые не должны отображаться в игровом представлении.",
+  "DD2MODCONFIG-RESOLUTE_OR_MELTDOWN_POWER_MODEL.description": "Базовые классы Решительного и Срыва, которые не должны отображаться в игровом представлении.",
+  "DD2MODCONFIG-RESOLUTE_OR_MELTDOWN_POWER_MODEL.smartDescription": "Базовые классы Решительного и Срыва, которые не должны отображаться в игровом представлении.",
+  "DD2MODCONFIG-COMBO_POWER.title": "Комбо",
+  "DD2MODCONFIG-COMBO_POWER.description": "Некоторые карты наносят дополнительные эффекты цели с [gold]Комбо[/gold], затем удаляют этот жетон после применения этих эффектов.",
+  "DD2MODCONFIG-COMBO_POWER.smartDescription": "При применении к цели активирует дополнительные эффекты карт.",
+  "DD2MODCONFIG-ADD_COMBO_POWER.title": "Добавление Комбо",
+  "DD2MODCONFIG-ADD_COMBO_POWER.description": "Следующие [blue]X[/blue] карт атак, которые вы разыгрываете, применяют [gold]Комбо[/gold] к врагам.",
+  "DD2MODCONFIG-ADD_COMBO_POWER.smartDescription": "Следующие [blue]{Amount}[/blue] карт атак, которые вы разыгрываете, применяют [gold]Комбо[/gold] к врагам.", 
+  "DD2MODCONFIG-SPAWN_DEATH_POWER.title": "Смерть приходит...",
+  "DD2MODCONFIG-SPAWN_DEATH_POWER.description": "Смерть приходит...",
+  "DD2MODCONFIG-SPAWN_DEATH_POWER.smartDescription": "Смерть приходит...", 
+  "DD2MODCONFIG-DEATH_ARMOR_POWER.title": "Броня от смерти",
+  "DD2MODCONFIG-DEATH_ARMOR_POWER.description": "Защищает от [blue]X[/blue] [red]смертельных ударов[/red].",
+  "DD2MODCONFIG-DEATH_ARMOR_POWER.smartDescription": "Защищает от [blue]{Amount}[/blue] [red]смертельных ударов[/red]."
+}

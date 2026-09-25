@@ -1,0 +1,8 @@
+{
+  "DD2MODCONFIG-DEATHS_HEAD.description": "제력이 [blue]0[/blue]이 될 때, 최대 제력이 [green]{Heal}%[/green]만큼 체력을 회복합니다 (한 번만).",
+  "DD2MODCONFIG-DEATHS_HEAD.flavor": "[red]도망칠 순 있어도... 숨을 순 없다![/red]",
+  "DD2MODCONFIG-DEATHS_HEAD.title": "사신의 머리",
+  "DD2MODCONFIG-STRESS_COUNTER_RELIC.title": "스트레스 카운터",
+  "DD2MODCONFIG-STRESS_COUNTER_RELIC.flavor": "[red]파멸이 우리 가문에 찾아왔습니다.[/red]",
+  "DD2MODCONFIG-STRESS_COUNTER_RELIC.description": "현재 [gold]스트레스[/gold]를 기록합니다. 전투 종료 시, 자신의 [gold]스트레스[/gold]를 유지합니다."
+}

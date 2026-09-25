@@ -1,0 +1,47 @@
+[gd_scene load_steps=5 format=3 uid="uid://dp44xogg54p1t"]
+
+[ext_resource type="Shader" uid="uid://dtq4q27l2axb" path="res://DD2ModConfig_Asset/Monster_Death/EnterEffect/Snow.gdshader" id="3_xdhkd"]
+[ext_resource type="Shader" uid="uid://b3w3py5u7yi3b" path="res://DD2ModConfig_Asset/Monster_Death/EnterEffect/GrayOverlay.gdshader" id="4_e7tx7"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_iydd2"]
+shader = ExtResource("4_e7tx7")
+shader_parameter/hide = false
+shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/strength = 1.4
+shader_parameter/gray_brightness = 0.2000000095
+shader_parameter/gray_tint = Color(0.9, 0.9, 0.9, 1)
+shader_parameter/brightness = 0.9
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4nsw0"]
+shader = ExtResource("3_xdhkd")
+shader_parameter/spread = 1.5
+shader_parameter/size = 0.30000001355148
+shader_parameter/snow_color = Color(1, 1, 1, 1)
+shader_parameter/snow_transparency = 1.0
+shader_parameter/speed = 1.0000000475
+shader_parameter/wind = 0.8000001330000002
+shader_parameter/num_of_layers = 20
+
+[node name="EnterEffectNode" type="Node2D"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+follow_viewport_enabled = true
+
+[node name="GrayscaleOverlay" type="ColorRect" parent="CanvasLayer"]
+material = SubResource("ShaderMaterial_iydd2")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.7529412, 0.7529412, 0.7529412, 1)
+
+[node name="Snow" type="ColorRect" parent="CanvasLayer"]
+material = SubResource("ShaderMaterial_4nsw0")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2

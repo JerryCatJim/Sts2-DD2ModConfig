@@ -1,0 +1,8 @@
+{
+  "DD2MODCONFIG-DEATHS_HEAD.title": "Голова смерти",
+  "DD2MODCONFIG-DEATHS_HEAD.flavor": "[red]Ты можешь бежать... Но не спрятаться![/red]",
+  "DD2MODCONFIG-DEATHS_HEAD.description": "Когда ОЗ понижаются до [blue]0[/blue], вы исцеляетесь до [green]{Heal}%[/green] от максимальных ОЗ вместо того, чтобы умереть (срабатывает один раз).",
+  "DD2MODCONFIG-STRESS_COUNTER_RELIC.title": "Счётчик стресса",
+  "DD2MODCONFIG-STRESS_COUNTER_RELIC.flavor": "[red]Разорение пришло в наш род.[/red]",
+  "DD2MODCONFIG-STRESS_COUNTER_RELIC.description": "Записывает ваш текущий [gold]Стресс[/gold]. В конце боя сохраняет ваш [gold]Стресс[/gold]."
+}
