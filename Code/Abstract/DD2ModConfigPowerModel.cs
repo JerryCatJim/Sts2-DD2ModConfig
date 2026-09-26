@@ -1,5 +1,6 @@
 using BaseLib.Abstracts;
 using BaseLib.Extensions;
+using DD2ModConfig.Code.Compatibility;
 using DD2ModConfig.Code.Extensions;
 using Godot;
 using MegaCrit.Sts2.Core.Modding;
@@ -15,8 +16,15 @@ public abstract class DD2ModConfigPowerModel : CustomPowerModel
     {
         //GetType()直接就是返回的当前子类实例的类型，无需将CurrentModId写为virtual来override
         var asm = GetType().Assembly;
-        var mod = ModManager.Mods.FirstOrDefault(m => m.assemblies.Contains(asm));
-        return mod?.manifest?.id ?? "Unknown";
+        var mod = ModManager.Mods.FirstOrDefault((Mod m) => DD2ModCompatibility.GetAssemblies(m).Contains(asm));
+        return mod?.manifest?.id ?? GetModIdByNamespace();
+    }
+    private string GetModIdByNamespace()
+    {
+        var ns = GetType().Namespace;
+        if (string.IsNullOrEmpty(ns)) return "Unknown";
+        var dot = ns.IndexOf('.');
+        return dot < 0 ? ns : ns.Substring(0, dot);
     }
 
     public override string CustomBigIconPath
