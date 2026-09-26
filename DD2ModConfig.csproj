@@ -21,11 +21,21 @@
 		<Description>Sts2-DD2ModConfig</Description>
 		<!--PackageReleaseNotes></PackageReleaseNotes-->
 		<PackageTags>sts2;BaseLib</PackageTags>
-		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<!--GenerateDocumentationFile>true</GenerateDocumentationFile-->
 		<IncludeBuildOutput>true</IncludeBuildOutput>
 		<RepositoryUrl>https://github.com/JerryCatJim/Sts2-DD2ModConfig</RepositoryUrl>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 	</PropertyGroup>
+	<PropertyGroup>
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
+		<EmbedUntrackedSources>true</EmbedUntrackedSources>
+		<IncludeSymbols>true</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+		<DebugType>portable</DebugType>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="9.0.0" PrivateAssets="All" />
+	</ItemGroup>
 
 	<PropertyGroup Condition="'$(Configuration)' == 'Debug'">
 		<Optimize>false</Optimize>
@@ -144,6 +154,7 @@
 		<!--Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ModsPath)$(MSBuildProjectName)/lib/$(Sts2ApiCompat)" /-->
 		<Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ModsPath)$(MSBuildProjectName)/" />
 		<Copy SourceFiles="DD2ModConfig.json" DestinationFolder="$(ModsPath)$(MSBuildProjectName)/" />
+		<Copy SourceFiles="$(TargetDir)$(TargetName).pdb" DestinationFolder="$(ModsPath)$(MSBuildProjectName)/" Condition="Exists('$(TargetDir)$(TargetName).pdb')"/>
 
 		<Message Text="Copying BaseLib to mods folder." Importance="high" />
 		<ItemGroup>

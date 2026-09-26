@@ -2,7 +2,7 @@
   "id": "DD2ModConfig",
   "name": "DD2ModConfig",
   "author": "Jerry",
-  "description": "Test",
+  "description": "Mod Lib for some Darkeset Dungeon Style Mods.",
   "version": "$VERSION$",
   "has_pck": true,
   "has_dll": true,

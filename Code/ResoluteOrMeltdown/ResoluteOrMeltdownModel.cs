@@ -7,6 +7,7 @@ using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.HoverTips;
 using MegaCrit.Sts2.Core.Localization;
+using MegaCrit.Sts2.Core.Modding;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.CardPools;
 using MegaCrit.Sts2.Core.Nodes.Vfx.Utilities;
@@ -37,9 +38,20 @@ public abstract class ResoluteOrMeltdownModel : AbstractModel
         return mutable;
     }
 
-    private LocString Title => new("powers", $"{MainFile.ModId.ToUpperInvariant()}-{Id.Entry}.title");
-    private LocString Description => new("powers", $"{MainFile.ModId.ToUpperInvariant()}-{Id.Entry}.description");
-    private string PackedIconPath => $"{Id.Entry.RemovePrefix().ToLowerInvariant()}.png".PowerImagePath();
+    //可以获取到引用该前置库的子MOD的ModId
+    private string? _currentModId;
+    protected string CurrentModId => _currentModId ??= ResolveModId();
+    private string ResolveModId()
+    {
+        //GetType()直接就是返回的当前子类实例的类型，无需将CurrentModId写为virtual来override
+        var asm = GetType().Assembly;
+        var mod = ModManager.Mods.FirstOrDefault(m => m.assemblies.Contains(asm));
+        return mod?.manifest?.id ?? "Unknown";
+    }
+
+    private LocString Title => new("powers", $"{CurrentModId.ToUpperInvariant()}-{Id.Entry}.title");
+    private LocString Description => new("powers", $"{CurrentModId.ToUpperInvariant()}-{Id.Entry}.description");
+    private string PackedIconPath => $"{Id.Entry.RemovePrefix().ToLowerInvariant()}.png".PowerImagePath(CurrentModId);
     private Texture2D Icon => ResourceLoader.Load<Texture2D>(PackedIconPath);
     public HoverTip DumbHoverTip
     {
