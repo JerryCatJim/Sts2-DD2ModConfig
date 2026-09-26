@@ -1,12 +1,14 @@
 using BaseLib.Config;
+using DD2ModConfig.Code.Config;
+using DD2ModConfig.Code.Core;
+using DD2ModConfig.Code.VFX;
+using Godot;
 using Godot.Bridge;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Modding;
 using System.Reflection;
-using DD2ModConfig.Code.Config;
 using Logger = MegaCrit.Sts2.Core.Logging.Logger;
-using DD2ModConfig.Code.Core;
 
 namespace DD2ModConfig.Code;
 
@@ -27,12 +29,13 @@ public partial class MainFile// : Node
 {
 	public const string ModId = "DD2ModConfig"; //At the moment, this is used only for the Logger and harmony names.
 
-	public static Logger Logger { get; } =
+    public static Logger Logger { get; } =
 		new(ModId, LogType.Generic);
 
 	public static void Initialize()
 	{
 		RMSubscriber.Subscribe();
+        PreloadEffectScenes();
 
         ModConfigRegistry.Register(ModId, new DD2ModConfigCfg());
 
@@ -59,5 +62,24 @@ public partial class MainFile// : Node
         {
             Log.Info($"Harmony PatchAll FAILED: {ex}");
         }*/
+    }
+    private static void PreloadEffectScenes()
+    {
+        var paths = new List<string> {
+            "res://DD2ModConfig/Scenes/DD2Scenes/StressUp.tscn",
+            "res://DD2ModConfig/Scenes/DD2Scenes/StressDown.tscn",
+            "res://DD2ModConfig/Scenes/DD2Scenes/DeathArmor.tscn",
+            "res://DD2ModConfig/Scenes/DD2Scenes/DeathBlow.tscn",
+            "res://DD2ModConfig/Scenes/DD2Scenes/DeathDoor.tscn",
+        };
+        foreach (var path in paths)
+        {
+            if (VFXUtil.ModSceneCache.ContainsKey(path)) continue;
+            var scene = ResourceLoader.Load<PackedScene>(path, null, ResourceLoader.CacheMode.Reuse);
+            if (scene != null)
+            {
+                VFXUtil.ModSceneCache[path] = scene;
+            }
+        }
     }
 }

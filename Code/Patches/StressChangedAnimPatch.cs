@@ -1,5 +1,6 @@
 using DD2ModConfig.Code.Audio;
 using DD2ModConfig.Code.Powers;
+using DD2ModConfig.Code.VFX;
 using Godot;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Assets;
@@ -30,7 +31,8 @@ public static class StressIncreaseAnimPatch
                 Node2D StressNode = __instance.Visuals.GetNodeOrNull<Node2D>(NodeName + "Node");
                 if (StressNode == null)
                 {
-                    StressNode = PreloadManager.Cache.GetScene("res://DD2ModConfig/Scenes/DD2Scenes/" + NodeName + ".tscn").Instantiate<Node2D>();
+                    StressNode = VFXUtil.GetVFXNode("res://DD2ModConfig/Scenes/DD2Scenes/" + NodeName + ".tscn");
+                    //StressNode = PreloadManager.Cache.GetScene("res://DD2ModConfig/Scenes/DD2Scenes/" + NodeName + ".tscn").Instantiate<Node2D>();
                 }
                 if (StressNode == null)
                 {

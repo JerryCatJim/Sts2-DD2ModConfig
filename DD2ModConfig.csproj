@@ -154,7 +154,7 @@
 		<!--Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ModsPath)$(MSBuildProjectName)/lib/$(Sts2ApiCompat)" /-->
 		<Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ModsPath)$(MSBuildProjectName)/" />
 		<Copy SourceFiles="DD2ModConfig.json" DestinationFolder="$(ModsPath)$(MSBuildProjectName)/" />
-		<Copy SourceFiles="$(TargetDir)$(TargetName).pdb" DestinationFolder="$(ModsPath)$(MSBuildProjectName)/" Condition="Exists('$(TargetDir)$(TargetName).pdb')"/>
+		<Copy SourceFiles="$(TargetDir)$(TargetName).pdb" DestinationFolder="$(ModsPath)$(MSBuildProjectName)/" Condition="Exists('$(TargetDir)$(TargetName).pdb')" />
 
 		<Message Text="Copying BaseLib to mods folder." Importance="high" />
 		<ItemGroup>
