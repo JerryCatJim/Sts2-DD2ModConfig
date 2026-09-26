@@ -7,6 +7,7 @@ using DD2ModConfig.Code.Powers;
 using DD2ModConfig.Code.Relics;
 using DD2ModConfig.Code.ResoluteOrMeltdown;
 using DD2ModConfig.Code.Singleton;
+using DD2ModConfig.Code.VFX;
 using Godot;
 using MegaCrit.Sts2.Core.Assets;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -195,7 +196,8 @@ public static class DD2Helper
         }
 
         string NodeName = DeathBlowName;
-        Node2D vfxNode = PreloadManager.Cache.GetScene("res://DD2ModConfig/Scenes/DD2Scenes/" + NodeName + ".tscn").Instantiate<Node2D>();
+        Node2D vfxNode = VFXUtil.GetVFXNode("res://DD2ModConfig/Scenes/DD2Scenes/" + NodeName + ".tscn");
+        //Node2D vfxNode = PreloadManager.Cache.GetScene("res://DD2ModConfig/Scenes/DD2Scenes/" + NodeName + ".tscn").Instantiate<Node2D>();
         if (vfxNode == null)
         {
             Log.Error("[DD2Helper PlayDeathVfx]: " + NodeName + ".tscn load failed.");
