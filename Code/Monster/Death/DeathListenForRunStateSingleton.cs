@@ -1,4 +1,5 @@
 using BaseLib.Abstracts;
+using DD2ModConfig.Code.Compatibility;
 using DD2ModConfig.Code.Config;
 using DD2ModConfig.Code.Helper;
 using DD2ModConfig.Code.Relics;
@@ -99,7 +100,7 @@ public class DeathListenForRunStateSingleton : CustomSingletonModel
             throw new ArgumentOutOfRangeException(nameof(N), "N must be greater than 0.");
         }
 
-        ulong seed = runState.Rng.Seed;         //盐值，增加分散度
+        ulong seed = DD2SeedCompat.GetRunRngSeed(runState.Rng);         //盐值，增加分散度
 
         seed = (seed ^ (ulong)a) * 0x9E3779B9u; // 混入 a
         seed = (seed ^ (ulong)b) * 0x85EBCA6Bu; // 混入 b
