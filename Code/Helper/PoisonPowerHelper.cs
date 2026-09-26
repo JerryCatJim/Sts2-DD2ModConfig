@@ -1,4 +1,5 @@
 using DD2ModConfig.Code.Abstract;
+using DD2ModConfig.Code.Compatibility;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Entities.Cards;
@@ -31,7 +32,7 @@ public static class PoisonPowerHelper
         for (int i = 0; i < num2; i++)
         {
             decimal damage = powerAmount - i;
-            damage = Hook.ModifyDamage(poisonPower.Owner.CombatState.RunState, poisonPower.Owner.CombatState, poisonPower.Owner, null, damage, ValueProp.Unblockable | ValueProp.Unpowered, null, null, ModifyDamageHookType.All, CardPreviewMode.None, out IEnumerable<AbstractModel> _);
+            damage = DD2Compatibility.ModifyDamageCompatibility(poisonPower.Owner.CombatState.RunState, poisonPower.Owner.CombatState, poisonPower.Owner, null, damage, ValueProp.Unblockable | ValueProp.Unpowered, null, null, ModifyDamageHookType.All, CardPreviewMode.None, out IEnumerable<AbstractModel> _);
             num += damage;
         }
         return (int)num;
@@ -45,7 +46,7 @@ public static class PoisonPowerHelper
         for (int i = 0; i < num2; i++)
         {
             decimal damage = poisonPower.Amount - i;
-            damage = Hook.ModifyDamage(poisonPower.Owner.CombatState.RunState, poisonPower.Owner.CombatState, poisonPower.Owner, null, damage, ValueProp.Unblockable | ValueProp.Unpowered, null, null, ModifyDamageHookType.All, CardPreviewMode.None, out IEnumerable<AbstractModel> _);
+            damage = DD2Compatibility.ModifyDamageCompatibility(poisonPower.Owner.CombatState.RunState, poisonPower.Owner.CombatState, poisonPower.Owner, null, damage, ValueProp.Unblockable | ValueProp.Unpowered, null, null, ModifyDamageHookType.All, CardPreviewMode.None, out IEnumerable<AbstractModel> _);
             num += damage;
         }
         return (int)num;

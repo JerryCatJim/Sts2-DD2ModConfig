@@ -15,6 +15,16 @@
 		<AssemblyVersion>0.0.1</AssemblyVersion>
 		<FileVersion>0.0.1</FileVersion>
 		<Version>0.0.1</Version>
+		<PackageId>Jerry.Sts2.DD2ModConfig</PackageId>
+		<Title>STS2-DD2ModConfig</Title>
+		<Authors>Jerry</Authors>
+		<Description>Sts2-DD2ModConfig</Description>
+		<!--PackageReleaseNotes></PackageReleaseNotes-->
+		<PackageTags>sts2;BaseLib</PackageTags>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<IncludeBuildOutput>true</IncludeBuildOutput>
+		<RepositoryUrl>https://github.com/JerryCatJim/Sts2-DD2ModConfig</RepositoryUrl>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)' == 'Debug'">
@@ -89,7 +99,7 @@
 
 	<PropertyGroup>
 		<!-- Disable architecture mismatch warning -->
-		<NoWarn>$(NoWarn);MSB3270</NoWarn>
+		<NoWarn>$(NoWarn);NU5128;MSB3270</NoWarn>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -97,13 +107,11 @@
 			<HintPath>$(Sts2DataDir)/0Harmony.dll</HintPath>
 			<Private>false</Private>
 		</Reference>
-		<!-- <Reference Include="BaseLib">
-      <HintPath>$(BaseLibPath)/BaseLib.dll</HintPath>
-    </Reference> -->
 		<!-- NuGet获取，注意版本是否一致，不一致手动更改Version -->
 		<PackageReference Include="Alchyr.Sts2.BaseLib" Version="*" />
 		<Reference Include="GodotSharp">
 			<HintPath>$(Sts2DataDir)/GodotSharp.dll</HintPath>
+			<Private>false</Private>
 		</Reference>
 		<Reference Include="sts2">
 			<HintPath>$(Sts2DataDir)/sts2.dll</HintPath>
@@ -113,7 +121,10 @@
 			<HintPath>$(Sts2DataDir)/SmartFormat.dll</HintPath>
 			<Private>false</Private>
 		</Reference>
-		<PackageReference Include="Alchyr.Sts2.ModAnalyzers" Version="0.1.9" />
+		<PackageReference Include="Alchyr.Sts2.ModAnalyzers" Version="0.1.9">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
 		<AdditionalFiles Include="DD2ModConfig/localization/**/*.json" />
 	</ItemGroup>
 

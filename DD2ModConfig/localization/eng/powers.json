@@ -1,7 +1,7 @@
 {
   "DD2MODCONFIG-STRESS_POWER.title": "Stress",
-  "DD2MODCONFIG-STRESS_POWER.description": "When you gain 10 [gold]Stress[/gold], enter a random [blue]Resolute[/blue] or [red]Meltdown[/red].\nDD2ModConfig will only enter [gold]Toxic[/gold].",
-  "DD2MODCONFIG-STRESS_POWER.smartDescription": "Enter a random [blue]Resolute[/blue] or [red]Meltdown[/red] after gaining 10 [gold]Stress[/gold].\nDD2ModConfig will only enter [gold]Toxic[/gold].",
+  "DD2MODCONFIG-STRESS_POWER.description": "When you gain 10 [gold]Stress[/gold], enter [blue]Resolute[/blue] or [red]Meltdown[/red] at random.\nFlagellant will only enter [gold]Toxic[/gold].",
+  "DD2MODCONFIG-STRESS_POWER.smartDescription": "Enter [blue]Resolute[/blue] or [red]Meltdown[/red] at random after gaining 10 [gold]Stress[/gold].\nFlagellant will only enter [gold]Toxic[/gold].",
   "DD2MODCONFIG-RESOLUTE_OR_MELTDOWN_POWER_MODEL.title": "The base classes of Resolute and Meltdown, which should not be displayed on the game view.",
   "DD2MODCONFIG-RESOLUTE_OR_MELTDOWN_POWER_MODEL.description": "The base classes of Resolute and Meltdown, which should not be displayed on the game view.",
   "DD2MODCONFIG-RESOLUTE_OR_MELTDOWN_POWER_MODEL.smartDescription": "The base classes of Resolute and Meltdown, which should not be displayed on the game view.",
