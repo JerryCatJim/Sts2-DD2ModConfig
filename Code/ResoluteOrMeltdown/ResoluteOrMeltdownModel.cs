@@ -46,7 +46,7 @@ public abstract class ResoluteOrMeltdownModel : AbstractModel
     {
         //GetType()直接就是返回的当前子类实例的类型，无需将CurrentModId写为virtual来override
         var asm = GetType().Assembly;
-        var mod = ModManager.Mods.FirstOrDefault((Mod m) => DD2ModCompatibility.GetAssemblies(m).Contains(asm)); 
+        var mod = ModManager.Mods.FirstOrDefault((Mod m) => DD2ModCompat.GetAssemblies(m).Contains(asm)); 
         return mod?.manifest?.id ?? GetModIdByNamespace();
     }
     private string GetModIdByNamespace()
@@ -61,7 +61,9 @@ public abstract class ResoluteOrMeltdownModel : AbstractModel
     private LocString Description => new("powers", $"{CurrentModId.ToUpperInvariant()}-{Id.Entry}.description");
     private string PackedIconPath => $"{Id.Entry.RemovePrefix().ToLowerInvariant()}.png".PowerImagePath(CurrentModId);
     private Texture2D Icon => ResourceLoader.Load<Texture2D>(PackedIconPath);
-    public HoverTip DumbHoverTip
+
+    //允许用户用Ritsulib等其他非Baselib方法添加HoverTip
+    public virtual HoverTip DumbHoverTip
     {
         get
         {

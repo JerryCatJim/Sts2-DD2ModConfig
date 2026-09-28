@@ -16,7 +16,7 @@ public abstract class DD2ModConfigPowerModel : CustomPowerModel
     {
         //GetType()直接就是返回的当前子类实例的类型，无需将CurrentModId写为virtual来override
         var asm = GetType().Assembly;
-        var mod = ModManager.Mods.FirstOrDefault((Mod m) => DD2ModCompatibility.GetAssemblies(m).Contains(asm));
+        var mod = ModManager.Mods.FirstOrDefault((Mod m) => DD2ModCompat.GetAssemblies(m).Contains(asm));
         return mod?.manifest?.id ?? GetModIdByNamespace();
     }
     private string GetModIdByNamespace()

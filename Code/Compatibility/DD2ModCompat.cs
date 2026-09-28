@@ -3,7 +3,7 @@ using System.Reflection;
 
 namespace DD2ModConfig.Code.Compatibility;
 
-public static class DD2ModCompatibility  //兼容的是官方的Mod.cs
+public static class DD2ModCompat  //兼容的是官方的Mod.cs
 {
     // 探测一次，缓存结果
     private static readonly FieldInfo? SingleAssemblyField =

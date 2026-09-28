@@ -8,7 +8,7 @@ using MegaCrit.Sts2.Core.ValueProps;
 
 namespace DD2ModConfig.Code.Compatibility;
 
-public static class DD2Compatibility
+public static class DD2HookCompat
 {
     private static DD2VariableMethod _modifyDamage = new DD2VariableMethod(
     (typeof(Hook), "ModifyDamage", new Type[11]
@@ -39,7 +39,7 @@ public static class DD2Compatibility
         typeof(IEnumerable<AbstractModel>).MakeByRefType()
     }, new int[10] { 0, 1, 2, 3, 4, 5, 6, 8, 9, 10 }));
 
-    public static decimal ModifyDamageCompatibility(IRunState runState, ICombatState? combatState, Creature? target, Creature? dealer, decimal damage, ValueProp props, CardModel? cardSource, CardPlay? cardPlay, ModifyDamageHookType modifyDamageHookType, CardPreviewMode previewMode, out IEnumerable<AbstractModel> modifiers)
+    public static decimal ModifyDamageCompat(IRunState runState, ICombatState? combatState, Creature? target, Creature? dealer, decimal damage, ValueProp props, CardModel? cardSource, CardPlay? cardPlay, ModifyDamageHookType modifyDamageHookType, CardPreviewMode previewMode, out IEnumerable<AbstractModel> modifiers)
     {
         //静态类的第一个参数this调用者传入null
         (decimal modifiedDamage, object?[] Args) pairs = _modifyDamage.InvokeWithArgs<decimal>(null, new object?[11] { runState, combatState, target, dealer, damage, props, cardSource, cardPlay, modifyDamageHookType, previewMode, null});
