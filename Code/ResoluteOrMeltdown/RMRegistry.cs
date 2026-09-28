@@ -34,7 +34,11 @@ public static class RMRegistry
     public static IReadOnlyList<RMRegistration> GetUniqueList(string CharacterId)
     {
         EnsureScanned();
-        return _cache!.Where(r => r.IsUnique && r.CharacterId == CharacterId).ToList();
+        return _cache!.Where(r => r.IsUnique && r.CharacterId == CharacterId)
+            .OrderBy(r => r.CharacterId, StringComparer.Ordinal)
+            .ThenBy(r => r.ModelType.FullName, StringComparer.Ordinal)
+            .ToList();
+        //确保每次查询顺序一致
     }
 
     private static void EnsureScanned()

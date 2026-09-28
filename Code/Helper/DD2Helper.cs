@@ -1,15 +1,12 @@
 using DD2ModConfig.Code.Abstract;
 using DD2ModConfig.Code.Audio;
 using DD2ModConfig.Code.Config;
-using DD2ModConfig.Code.Core;
 using DD2ModConfig.Code.Monster.DeathMonster;
 using DD2ModConfig.Code.Powers;
 using DD2ModConfig.Code.Relics;
-using DD2ModConfig.Code.ResoluteOrMeltdown;
 using DD2ModConfig.Code.Singleton;
 using DD2ModConfig.Code.VFX;
 using Godot;
-using MegaCrit.Sts2.Core.Assets;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Helpers;
@@ -62,15 +59,6 @@ public static class DD2Helper
         {
             relic.CurrentStress = 0;
         }
-    }
-    public static ResoluteOrMeltdownModel TryGetUniqueRM(Player? player)
-    {
-        if (player != null)
-        {
-            ResoluteOrMeltdownModel? uniqueRM = RMRegistry.GetUniqueList(player.Character.Id.Entry).FirstOrDefault()?.Factory();
-            return uniqueRM != null ? uniqueRM : RMModelDb.ResoluteOrMeltdown<NoResoluteAndMeltdown>();
-        }
-        return RMModelDb.ResoluteOrMeltdown<NoResoluteAndMeltdown>();
     }
     public static bool IsInDeathDoor(Creature? creature)
     {

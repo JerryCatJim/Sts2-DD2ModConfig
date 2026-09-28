@@ -93,29 +93,6 @@ public class DeathListenForRunStateSingleton : CustomSingletonModel
         }
     }
 
-    private static int GetRandomIndex(IRunState runState, int a, int b, int c, int N)
-    {
-        if (N <= 0)
-        {
-            throw new ArgumentOutOfRangeException(nameof(N), "N must be greater than 0.");
-        }
-
-        ulong seed = DD2SeedCompat.GetRunRngSeed(runState.Rng);         //盐值，增加分散度
-
-        seed = (seed ^ (ulong)a) * 0x9E3779B9u; // 混入 a
-        seed = (seed ^ (ulong)b) * 0x85EBCA6Bu; // 混入 b
-        seed = (seed ^ (ulong)c) * 0x7A3CFD3Bu; // 混入 c
-
-        // 额外扩散：让高位和低位互相影响
-        seed ^= (seed >> 16);
-        seed *= 0x85EBCA6Bu;
-        seed ^= (seed >> 13);
-        seed *= 0x7A3CFD3Bu;
-        seed ^= (seed >> 16);
-
-        return (int)(seed % (ulong)N);
-    }
-
     private bool CheckSpawnDeathCondition(AbstractRoom room)
     {
         if (room is CombatRoom combatRoom)
@@ -141,11 +118,9 @@ public class DeathListenForRunStateSingleton : CustomSingletonModel
             {
                 //按理说应该只让这个Rng方法在所有玩家内只执行一次，多次执行会多人模式数据不同步，但是我没找到好的位置，所以自己写个哈希凑合一下
                 //int index0 = combatRoom.CombatState.RunState.Rng.UpFront.NextInt(0, 99);
-                IRunState RunState = combatRoom.CombatState.RunState;
-                int AllPlayersHP = combatRoom.CombatState.Players.Sum((Player p) => p.Creature?.CurrentHp ?? 0);
-                int AllEnemiesHP = combatRoom.CombatState.HittableEnemies.Sum((Creature c) => c?.CurrentHp ?? 0);
-                int index0 = GetRandomIndex(RunState, AllPlayersHP, AllEnemiesHP, RunState.TotalFloor, 100);
-                if (index0 < EncounterChance)
+                ICombatState combatState = combatRoom.CombatState;
+                int index = DD2RngHelper.GetRandomIndex(combatState, 100);
+                if (index >= 0 && index < EncounterChance)
                 {
                     return true;
                 }
@@ -179,9 +154,9 @@ public class DeathListenForRunStateSingleton : CustomSingletonModel
             {
                 //按理说应该只让这个Rng方法在所有玩家内只执行一次，多次执行会多人模式数据不同步，但是我没找到好的位置，所以自己写个哈希凑合一下
                 //int index0 = combatRoom.CombatState.RunState.Rng.UpFront.NextInt(0, 99);
-                IRunState RunState = combatRoom.CombatState.RunState;
-                int index0 = GetRandomIndex(RunState, RunState.CurrentActIndex, RunState.TotalFloor, RunState.ActFloor, 100);
-                if (index0 < 6)
+                ICombatState combatState = combatRoom.CombatState;
+                int index = DD2RngHelper.GetRandomIndex(combatState, 100);
+                if (index >= 0 && index < 6)
                 {
                     return true;
                 }

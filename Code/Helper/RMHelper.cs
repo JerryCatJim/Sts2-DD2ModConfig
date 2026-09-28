@@ -33,7 +33,6 @@ public static class RMHelper
         return ActiveRM[player] is T;
     }
 
-
     public static async Task SetResoluteOrMeltdown<T>(PlayerChoiceContext ctx, Player player, CardModel? source) where T : ResoluteOrMeltdownModel
     {
         await SetResoluteOrMeltdown(ctx, player, RMModelDb.ResoluteOrMeltdown<T>(), source);
@@ -54,5 +53,34 @@ public static class RMHelper
 
         //var creatureNode = NCombatRoom.Instance?.GetCreatureNode(player.Creature);
         await DD2Hooks.OnResoluteOrMeltdownChanged(ctx, player, current!, ActiveRM[player]!);
+    }
+    public static ResoluteOrMeltdownModel TryGetUniqueRM(Player player)
+    {
+        if (player != null)
+        {
+            ResoluteOrMeltdownModel? uniqueRM = RMRegistry.GetUniqueList(player.Character.Id.Entry).FirstOrDefault()?.Factory();
+            return uniqueRM != null ? uniqueRM : RMModelDb.ResoluteOrMeltdown<NoResoluteAndMeltdown>();
+        }
+        return RMModelDb.ResoluteOrMeltdown<NoResoluteAndMeltdown>();
+    }
+    public static ResoluteOrMeltdownModel GetRandomResolute(Player player)
+    {
+        return GetRM(player, ResoluteOrMeltdownType.Resolute);
+    }
+    public static ResoluteOrMeltdownModel GetRandomMeltdown(Player player)
+    {
+        return GetRM(player, ResoluteOrMeltdownType.Meltdown);
+    }
+    private static ResoluteOrMeltdownModel GetRM(Player player, ResoluteOrMeltdownType rmType)
+    {
+        IReadOnlyList<RMRegistration> RMList =
+                RMRegistry.Query(r => r.RMType == rmType
+                    //RMRegisterAttribute里给未绑定角色的RM默认赋值CharacterId = "*"
+                    && (r.CharacterId == "*" || r.CharacterId == player.Character.Id.Entry));
+        int index = DD2RngHelper.GetRandomIndex(player, N: RMList.Count);
+
+        if (index < 0 || index >= RMList.Count) return RMModelDb.ResoluteOrMeltdown<NoResoluteAndMeltdown>();
+
+        return RMList[index].Factory() ?? RMModelDb.ResoluteOrMeltdown<NoResoluteAndMeltdown>();
     }
 }

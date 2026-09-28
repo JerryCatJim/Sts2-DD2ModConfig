@@ -7,6 +7,8 @@ public sealed class RMRegisterAttribute : Attribute
 {
     private string? _characterId;
     public ResoluteOrMeltdownType RMType { get; }
+
+    //标记了所属角色的RM，若isUnique = true，则该角色爆压时只会进入UniqueList中的某一个RM；若isUnique = false，则进入公共池+仅供该角色进入的RM池的组合List的某一个
     public bool IsUnique { get; }
 
     public RMRegisterAttribute(string characterId, ResoluteOrMeltdownType rmType, bool isUnique = false)
@@ -21,6 +23,13 @@ public sealed class RMRegisterAttribute : Attribute
         CharacterType = characterType;
         RMType = rmType;
         IsUnique = isUnique;
+    }
+
+    public RMRegisterAttribute(ResoluteOrMeltdownType rmType)
+    {
+        _characterId = "*";
+        RMType = rmType;
+        IsUnique = false;
     }
 
     public Type? CharacterType { get; }
