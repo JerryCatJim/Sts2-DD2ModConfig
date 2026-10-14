@@ -45,10 +45,15 @@ public static class RMHelper
         //if (current?.GetType() == newCanonical.GetType()) return;
 
         if (current != null)
+        {
+            await current.PlayExitRMVfx(player);
             await current.OnExitResoluteOrMeltdown(ctx, player, source);
+        }
 
         var mutable = newCanonical.ToMutable(player);
         ActiveRM[player] = mutable;
+
+        await mutable.PlayEnterRMVfx(player);
         await mutable.OnEnterResoluteOrMeltdown(ctx, player, source);
 
         //var creatureNode = NCombatRoom.Instance?.GetCreatureNode(player.Creature);

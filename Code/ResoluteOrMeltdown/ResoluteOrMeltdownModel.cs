@@ -3,6 +3,7 @@ using DD2ModConfig.Code.Compatibility;
 using DD2ModConfig.Code.Extensions;
 using DD2ModConfig.Code.ResoluteOrMeltdown.Vfx;
 using Godot;
+using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
@@ -11,6 +12,8 @@ using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Modding;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.CardPools;
+using MegaCrit.Sts2.Core.Nodes.Rooms;
+using MegaCrit.Sts2.Core.Nodes.Vfx;
 using MegaCrit.Sts2.Core.Nodes.Vfx.Utilities;
 
 namespace DD2ModConfig.Code.ResoluteOrMeltdown;
@@ -25,6 +28,8 @@ public enum ResoluteOrMeltdownType
 
 public abstract class ResoluteOrMeltdownModel : AbstractModel
 {
+    public override bool ShouldReceiveCombatHooks => true;
+
     private Player? _player;
     public Player Owner => _player ?? throw new InvalidOperationException("Not a mutable instance");
 
@@ -89,17 +94,41 @@ public abstract class ResoluteOrMeltdownModel : AbstractModel
 
     //public IEnumerable<string> AssetPaths => VfxConfig.AssetPaths;
 
-    public virtual async Task OnEnterResoluteOrMeltdown(PlayerChoiceContext ctx, Player owner, CardModel? source)
+    public virtual Task OnEnterResoluteOrMeltdown(PlayerChoiceContext ctx, Player owner, CardModel? source)
     {
-        _vfx = new VfxController(RMVfxConfig);
-        await _vfx.OnEnter(owner.Creature);
-
+        return Task.CompletedTask;
     }
 
-    public virtual async Task OnExitResoluteOrMeltdown(PlayerChoiceContext ctx, Player owner, CardModel? source)
+    public virtual Task OnExitResoluteOrMeltdown(PlayerChoiceContext ctx, Player owner, CardModel? source)
     {
+        return Task.CompletedTask;
+    }
+
+    public virtual async Task PlayEnterRMVfx(Player player)
+    {
+        if (player == null) return;
+
+        if (LocalContext.IsMe(player))
+        {
+            if (RMType == ResoluteOrMeltdownType.Resolute)
+            {
+                NCombatRoom.Instance?.CombatVfxContainer.AddChildSafely(NSmokyVignetteVfx.Create(new Color(0.95f, 0.85f, 0.55f, 0.66f), new Color(4f, 4f, 0.5f, 0.33f)));
+            }
+            else if (RMType == ResoluteOrMeltdownType.Meltdown)
+            {
+                NCombatRoom.Instance?.CombatVfxContainer.AddChildSafely(NSmokyVignetteVfx.Create(new Color(0.6f, 0.7f, 1.0f, 0.66f), new Color(0f, 1.5f, 3f, 0.33f)));
+            }
+        }
+        _vfx = new VfxController(RMVfxConfig);
+        await _vfx.OnEnter(player.Creature);
+    }
+
+    public virtual async Task PlayExitRMVfx(Player player)
+    {
+        if (player == null) return;
+
         if (_vfx != null)
-            await _vfx.OnExit(owner.Creature);
+            await _vfx.OnExit(player.Creature);
         _vfx = null;
     }
 

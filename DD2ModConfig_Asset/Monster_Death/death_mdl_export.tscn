@@ -1,6 +1,26 @@
-[gd_scene load_steps=2 format=3 uid="uid://5n7nxxa8ut3c"]
+[gd_scene load_steps=5 format=3 uid="uid://5n7nxxa8ut3c"]
 
 [ext_resource type="PackedScene" uid="uid://cgkfsj10t1ioe" path="res://DD2ModConfig_Asset/Monster_Death/death_mdl_export.glb" id="1_q3vat"]
+[ext_resource type="Shader" uid="uid://0mwe0ip278ux" path="res://DD2ModConfig_Asset/Monster_Death/Shader/DD2_Shadow_Shader.gdshader" id="2_4s3px"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rohrr"]
+render_priority = 0
+shader = ExtResource("2_4s3px")
+shader_parameter/shadow_color = Color(0, 0, 0, 0.3)
+shader_parameter/fade = 2.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_ve47b"]
+top_radius = 1.2
+bottom_radius = 1.2
+height = 0.01
 
 [node name="death_mdl_export" instance=ExtResource("1_q3vat")]
 transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, 0, 0, 0)
+
+[node name="shared_death_art_prefab" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+
+[node name="ShadowNode" type="MeshInstance3D" parent="." index="2"]
+transform = Transform3D(0.9961947, 0.08715574, 0, -0.087102644, 0.9955879, -0.034899496, -0.0030416911, 0.034766693, 0.99939084, 0, -0.01, -0.1)
+material_override = SubResource("ShaderMaterial_rohrr")
+mesh = SubResource("CylinderMesh_ve47b")

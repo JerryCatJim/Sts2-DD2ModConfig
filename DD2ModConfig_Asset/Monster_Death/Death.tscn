@@ -308,7 +308,7 @@ size = Vector2i(1000, 800)
 render_target_update_mode = 4
 
 [node name="death_mdl_export" parent="Visuals/SubViewportContainer/SubViewport" instance=ExtResource("4_jnqev")]
-transform = Transform3D(-4.371139e-06, 0, 100, 0, 100, 0, -100, 0, -4.371139e-06, 0, 0, 0)
+transform = Transform3D(-4.371139e-08, -0.034899496, 0.99939084, 0, 0.99939084, 0.034899496, -1, 1.5255054e-09, -4.368476e-08, 0, 0, 0)
 
 [node name="Camera3D" type="Camera3D" parent="Visuals/SubViewportContainer/SubViewport"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.1, 1.6, 8.5)

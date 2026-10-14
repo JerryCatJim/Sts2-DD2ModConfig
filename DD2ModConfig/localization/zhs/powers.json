@@ -1,10 +1,10 @@
 {
   "DD2MODCONFIG-STRESS_POWER.title": "压力",
-  "DD2MODCONFIG-STRESS_POWER.description": "当你获得10点压力时，会进入随机[blue]美德[/blue]或[red]折磨[/red]状态。\n鞭笞者只会进入[gold]怨毒[gold]。",
-  "DD2MODCONFIG-STRESS_POWER.smartDescription": "满10点进入随机[blue]美德[/blue]或[red]折磨[/red]状态。\n鞭笞者只会进入[gold]怨毒[gold]。",
-  "DD2MODCONFIG-RESOLUTE_OR_MELTDOWN_POWER_MODEL.title": "美德和折磨的基类，不应该被展示到游戏界面。",
-  "DD2MODCONFIG-RESOLUTE_OR_MELTDOWN_POWER_MODEL.description": "美德和折磨的基类，不应该被展示到游戏界面。",
-  "DD2MODCONFIG-RESOLUTE_OR_MELTDOWN_POWER_MODEL.smartDescription": "美德和折磨的基类，不应该被展示到游戏界面。",
+  "DD2MODCONFIG-STRESS_POWER.description": "当你获得10点压力时，会进入随机[gold]坚定[/gold]或[blue]崩溃[/blue]状态。\n鞭笞者只会进入[gold]怨毒[gold]。",
+  "DD2MODCONFIG-STRESS_POWER.smartDescription": "满10点进入随机[gold]坚定[/gold]或[blue]崩溃[/blue]状态。\n鞭笞者只会进入[gold]怨毒[gold]。",
+  "DD2MODCONFIG-RESOLUTE_OR_MELTDOWN_POWER_MODEL.title": "坚定和崩溃的基类，不应该被展示到游戏界面。",
+  "DD2MODCONFIG-RESOLUTE_OR_MELTDOWN_POWER_MODEL.description": "坚定和崩溃的基类，不应该被展示到游戏界面。",
+  "DD2MODCONFIG-RESOLUTE_OR_MELTDOWN_POWER_MODEL.smartDescription": "坚定和崩溃的基类，不应该被展示到游戏界面。",
   "DD2MODCONFIG-COMBO_POWER.title": "破绽",
   "DD2MODCONFIG-COMBO_POWER.description": "部分卡牌可以对拥有[gold]破绽[/gold]的目标造成额外效果，并在额外效果生效后移除此标记。",
   "DD2MODCONFIG-COMBO_POWER.smartDescription": "作为目标时触发卡牌的额外效果。",
@@ -16,5 +16,15 @@
   "DD2MODCONFIG-SPAWN_DEATH_POWER.smartDescription": "死神降临...",
   "DD2MODCONFIG-DEATH_ARMOR_POWER.title": "死亡护甲",
   "DD2MODCONFIG-DEATH_ARMOR_POWER.description": "可抵御[blue]X[/blue]次[red]致命伤害[/red]。",
-  "DD2MODCONFIG-DEATH_ARMOR_POWER.smartDescription": "可抵御[blue]{Amount}[/blue]次[red]致命伤害[/red]。"
+  "DD2MODCONFIG-DEATH_ARMOR_POWER.smartDescription": "可抵御[blue]{Amount}[/blue]次[red]致命伤害[/red]。",
+  "DD2MODCONFIG-DEFAULT_RESOLUTE.title": "坚定",
+  "DD2MODCONFIG-DEFAULT_RESOLUTE.description": "进入[gold]坚定[/gold]时，你回复生命值。",
+  "DD2MODCONFIG-DEFAULT_RESOLUTE_POWER.title": "坚定",
+  "DD2MODCONFIG-DEFAULT_RESOLUTE_POWER.description": "进入[gold]坚定[/gold]时，你回复生命值。",
+  "DD2MODCONFIG-DEFAULT_RESOLUTE_POWER.smartDescription": "进入[gold]坚定[/gold]时，回复你最大生命值的[green]{HealPercent}%[/green]。",
+  "DD2MODCONFIG-DEFAULT_MELTDOWN.title": "崩溃",
+  "DD2MODCONFIG-DEFAULT_MELTDOWN.description": "进入[blue]崩溃[/blue]时，你失去生命值并获得[gold]死亡护甲[/gold]。",
+  "DD2MODCONFIG-DEFAULT_MELTDOWN_POWER.title": "崩溃",
+  "DD2MODCONFIG-DEFAULT_MELTDOWN_POWER.description": "进入[blue]崩溃[/blue]时，你失去生命值并获得[gold]死亡护甲[/gold]。",
+  "DD2MODCONFIG-DEFAULT_MELTDOWN_POWER.smartDescription": "进入[blue]崩溃[/blue]时，将你的当前生命值设置为你最大生命值的[red]{HpSetPercent}%[/red]，并获得[blue]{DeathArmorAmount}[/blue]层[gold]死亡护甲[/gold]。"
 }

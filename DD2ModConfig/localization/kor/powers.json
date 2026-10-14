@@ -11,10 +11,20 @@
   "DD2MODCONFIG-SPAWN_DEATH_POWER.description": "죽음이 다가온다...",
   "DD2MODCONFIG-SPAWN_DEATH_POWER.smartDescription": "죽음이 다가온다...",
   "DD2MODCONFIG-SPAWN_DEATH_POWER.title": "죽음 당도",
-  "DD2MODCONFIG-STRESS_POWER.description": "[gold]스트레스[/gold] 10을 얻으면, 무작위 [blue]굳은 결의[/blue] 또는 [red]붕괴[/red] 상태가 됩니다.\n고행자는 [gold]독성[/gold] 상태만 됩니다.",
-  "DD2MODCONFIG-STRESS_POWER.smartDescription": "[gold]스트레스[/gold] 10을 얻으면 무작위 [blue]굳은 결의[/blue] 또는 [red]붕괴[/red] 상태가 됩니다.\n고행자는 [gold]독성[/gold] 상태만 됩니다.",
+  "DD2MODCONFIG-STRESS_POWER.description": "[gold]스트레스[/gold] 10을 얻으면, 무작위 [gold]굳은 결의[/gold] 또는 [blue]붕괴[/blue] 상태가 됩니다.\n고행자는 [gold]독성[/gold] 상태만 됩니다.",
+  "DD2MODCONFIG-STRESS_POWER.smartDescription": "[gold]스트레스[/gold] 10을 얻으면 무작위 [gold]굳은 결의[/gold] 또는 [blue]붕괴[/blue] 상태가 됩니다.\n고행자는 [gold]독성[/gold] 상태만 됩니다.",
   "DD2MODCONFIG-STRESS_POWER.title": "스트레스",
   "DD2MODCONFIG-DEATH_ARMOR_POWER.title": "죽음 저항",
   "DD2MODCONFIG-DEATH_ARMOR_POWER.description": "[red]죽음의 일격[/red]을 [blue]X[/blue]회 방지.",
-  "DD2MODCONFIG-DEATH_ARMOR_POWER.smartDescription": "[red]죽음의 일격[/red]을 [blue]{Amount}[/blue]회 방지."
+  "DD2MODCONFIG-DEATH_ARMOR_POWER.smartDescription": "[red]죽음의 일격[/red]을 [blue]{Amount}[/blue]회 방지.",
+  "DD2MODCONFIG-DEFAULT_RESOLUTE.title": "굳은 결의",
+  "DD2MODCONFIG-DEFAULT_RESOLUTE.description": "[gold]굳은 결의[/gold] 상태에 진입하면, 체력을 회복합니다.",
+  "DD2MODCONFIG-DEFAULT_RESOLUTE_POWER.title": "굳은 결의",
+  "DD2MODCONFIG-DEFAULT_RESOLUTE_POWER.description": "[gold]굳은 결의[/gold] 상태에 진입하면, 체력을 회복합니다.",
+  "DD2MODCONFIG-DEFAULT_RESOLUTE_POWER.smartDescription": "[gold]굳은 결의[/gold] 상태에 진입하면, 최대 체력의 [green]{HealPercent}%[/green]만큼 회복합니다.",
+  "DD2MODCONFIG-DEFAULT_MELTDOWN.title": "붕괴",
+  "DD2MODCONFIG-DEFAULT_MELTDOWN.description": "[blue]붕괴[/blue] 상태에 진입하면, 체력을 잃고 [gold]죽음 저항[/gold]을 얻습니다.",
+  "DD2MODCONFIG-DEFAULT_MELTDOWN_POWER.title": "붕괴",
+  "DD2MODCONFIG-DEFAULT_MELTDOWN_POWER.description": "[blue]붕괴[/blue] 상태에 진입하면, 체력을 잃고 [gold]죽음 저항[/gold]을 얻습니다.",
+  "DD2MODCONFIG-DEFAULT_MELTDOWN_POWER.smartDescription": "[blue]붕괴[/blue] 상태에 진입하면, 현재 체력을 최대 체력의 [red]{HpSetPercent}%[/red]로 설정하고 [blue]{DeathArmorAmount}[/blue]만큼의 [gold]죽음 저항[/gold]을 얻습니다."
 }

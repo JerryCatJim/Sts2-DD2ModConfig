@@ -1,7 +1,7 @@
 {
   "DD2MODCONFIG-STRESS_POWER.title": "Stress",
-  "DD2MODCONFIG-STRESS_POWER.description": "When you gain 10 [gold]Stress[/gold], enter [blue]Resolute[/blue] or [red]Meltdown[/red] at random.\nFlagellant will only enter [gold]Toxic[/gold].",
-  "DD2MODCONFIG-STRESS_POWER.smartDescription": "Enter [blue]Resolute[/blue] or [red]Meltdown[/red] at random after gaining 10 [gold]Stress[/gold].\nFlagellant will only enter [gold]Toxic[/gold].",
+  "DD2MODCONFIG-STRESS_POWER.description": "When you gain 10 [gold]Stress[/gold], enter [gold]Resolute[/gold] or [blue]Meltdown[/blue] at random.\nFlagellant will only enter [gold]Toxic[/gold].",
+  "DD2MODCONFIG-STRESS_POWER.smartDescription": "Enter [gold]Resolute[/gold] or [blue]Meltdown[/blue] at random after gaining 10 [gold]Stress[/gold].\nFlagellant will only enter [gold]Toxic[/gold].",
   "DD2MODCONFIG-RESOLUTE_OR_MELTDOWN_POWER_MODEL.title": "The base classes of Resolute and Meltdown, which should not be displayed on the game view.",
   "DD2MODCONFIG-RESOLUTE_OR_MELTDOWN_POWER_MODEL.description": "The base classes of Resolute and Meltdown, which should not be displayed on the game view.",
   "DD2MODCONFIG-RESOLUTE_OR_MELTDOWN_POWER_MODEL.smartDescription": "The base classes of Resolute and Meltdown, which should not be displayed on the game view.",
@@ -16,5 +16,15 @@
   "DD2MODCONFIG-SPAWN_DEATH_POWER.smartDescription": "Death Comes...",
   "DD2MODCONFIG-DEATH_ARMOR_POWER.title": "Death Armor",
   "DD2MODCONFIG-DEATH_ARMOR_POWER.description": "Protects against [blue]X[/blue] [red]Deathblow[/red].",
-  "DD2MODCONFIG-DEATH_ARMOR_POWER.smartDescription": "Protects against [blue]{Amount}[/blue] [red]Deathblow[/red]."
+  "DD2MODCONFIG-DEATH_ARMOR_POWER.smartDescription": "Protects against [blue]{Amount}[/blue] [red]Deathblow[/red].",
+  "DD2MODCONFIG-DEFAULT_RESOLUTE.title": "Resolute",
+  "DD2MODCONFIG-DEFAULT_RESOLUTE.description": "When you enter [gold]Resolute[/gold]，you will heal.",
+  "DD2MODCONFIG-DEFAULT_RESOLUTE_POWER.title": "Resolute",
+  "DD2MODCONFIG-DEFAULT_RESOLUTE_POWER.description": "When you enter [gold]Resolute[/gold]，you will heal.",
+  "DD2MODCONFIG-DEFAULT_RESOLUTE_POWER.smartDescription": "When you enter [gold]Resolute[/gold]，heal for [green]{HealPercent}%[/green] of your Max HP.",
+  "DD2MODCONFIG-DEFAULT_MELTDOWN.title": "Meltdown",
+  "DD2MODCONFIG-DEFAULT_MELTDOWN.description": "When you enter [blue]Meltdown[/blue]，you will lose Hp and gain [gold]Death Armor[/gold].",
+  "DD2MODCONFIG-DEFAULT_MELTDOWN_POWER.title": "Meltdown",
+  "DD2MODCONFIG-DEFAULT_MELTDOWN_POWER.description": "When you enter [blue]Meltdown[/blue]，you will lose Hp and gain [gold]Death Armor[/gold].",
+  "DD2MODCONFIG-DEFAULT_MELTDOWN_POWER.smartDescription": "When you enter [blue]Meltdown[/blue]，set your current HP to [red]{HpSetPercent}%[/red] of your max HP and gain [blue]{DeathArmorAmount}[/blue] [gold]Death Armor[/gold]."
 }
