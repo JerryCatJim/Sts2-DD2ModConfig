@@ -120,10 +120,15 @@ public static class DD2Helper
         {
             return (decimal)DD2ModConfigCfg.PlayerShowDeathDoorVfxHpPercent;
         }
-        else
+        else if (creature.IsPet)
+        {
+            return (decimal)DD2ModConfigCfg.PetShowDeathDoorVfxHpPercent;
+        }
+        else if (creature.IsMonster)
         {
             return (decimal)DD2ModConfigCfg.MonsterShowDeathDoorVfxHpPercent;
         }
+        return 0m;
     }
 
     public static void ResetCombatDictionaries()
@@ -278,20 +283,23 @@ public static class DD2Helper
         if (creature == null) return false;
 
         return (creature.IsPlayer && DD2ModConfigCfg.ShouldPlayerShowDeathDoorVfx) ||
-            (!creature.IsPlayer && DD2ModConfigCfg.ShouldMonsterShowDeathDoorVfx);
+            (creature.IsMonster && !creature.IsPet && DD2ModConfigCfg.ShouldMonsterShowDeathDoorVfx) ||
+            (creature.IsPet && DD2ModConfigCfg.ShouldPetShowDeathDoorVfx);
     }
     public static bool ShouldPlayDeathArmorVfx(Creature creature)
     {
         if (creature == null) return false;
 
         return (creature.IsPlayer && DD2ModConfigCfg.ShouldPlayerShowDeathArmorVfx) ||
-            (!creature.IsPlayer && DD2ModConfigCfg.ShouldMonsterShowDeathArmorVfx);
+            (creature.IsMonster && !creature.IsPet && DD2ModConfigCfg.ShouldMonsterShowDeathArmorVfx) ||
+            (creature.IsPet && DD2ModConfigCfg.ShouldPetShowDeathArmorVfx);
     }
     public static bool ShouldPlayDeathBlowVfx(Creature creature)
     {
         if (creature == null) return false;
 
         return (creature.IsPlayer && DD2ModConfigCfg.ShouldPlayerShowDeathBlowVfx) ||
-            (!creature.IsPlayer && DD2ModConfigCfg.ShouldMonsterShowDeathBlowVfx);
+            (creature.IsMonster && !creature.IsPet && DD2ModConfigCfg.ShouldMonsterShowDeathBlowVfx) ||
+            (creature.IsPet && DD2ModConfigCfg.ShouldPetShowDeathBlowVfx);
     }
 }

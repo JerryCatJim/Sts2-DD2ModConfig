@@ -15,12 +15,17 @@ internal class DD2ModConfigCfg : SimpleModConfig
     public static int PlayerShowDeathDoorVfxHpPercent { get; set; } = 25;
     [ConfigSlider(0, 100, 1, Format = "{0:0} %")]
     public static int MonsterShowDeathDoorVfxHpPercent { get; set; } = 10;
+    [ConfigSlider(0, 100, 1, Format = "{0:0} %")]
+    public static int PetShowDeathDoorVfxHpPercent { get; set; } = 10;
     public static bool ShouldPlayerShowDeathDoorVfx { get; set; } = true;
     public static bool ShouldMonsterShowDeathDoorVfx { get; set; } = true;
+    public static bool ShouldPetShowDeathDoorVfx { get; set; } = false;
     public static bool ShouldPlayerShowDeathArmorVfx { get; set; } = true;
     public static bool ShouldMonsterShowDeathArmorVfx { get; set; } = true;
+    public static bool ShouldPetShowDeathArmorVfx { get; set; } = false;
     public static bool ShouldPlayerShowDeathBlowVfx { get; set; } = true;
     public static bool ShouldMonsterShowDeathBlowVfx { get; set; } = true;
+    public static bool ShouldPetShowDeathBlowVfx { get; set; } = false;
 
     [ConfigSection("DeathVfxAndBgm")]
     public static bool ShouldShowDeathEncounterVfx { get; set; } = true;
