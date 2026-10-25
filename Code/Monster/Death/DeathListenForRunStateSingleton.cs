@@ -1,5 +1,4 @@
 using BaseLib.Abstracts;
-using DD2ModConfig.Code.Compatibility;
 using DD2ModConfig.Code.Config;
 using DD2ModConfig.Code.Helper;
 using DD2ModConfig.Code.Relics;
@@ -12,7 +11,6 @@ using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Audio;
 using MegaCrit.Sts2.Core.Rooms;
-using MegaCrit.Sts2.Core.Runs;
 using MegaCrit.Sts2.Core.Saves;
 
 namespace DD2ModConfig.Code.Monster.DeathMonster;
@@ -24,8 +22,15 @@ public class DeathListenForRunStateSingleton : CustomSingletonModel
         
     }
 
-    private static bool UseMultiplayerDefaultCondition => CombatState?.Players.Count > 1 && DD2ModConfigCfg.ShouldMultiplayerUseDefaultCondition;
-    public static bool ShouldPredictWhetherDeathWillAppear => UseMultiplayerDefaultCondition ? true : DD2ModConfigCfg.PredictWhetherDeathWillAppear;
+    public static bool ShouldPredictWhetherDeathWillAppear { get; set; } = DD2ModConfigCfg.PredictWhetherDeathWillAppear;
+    public static bool ShouldDeathOnlyHuntFlagellant { get; set; } = DD2ModConfigCfg.ShouldDeathOnlyHuntFlagellant;
+    public static int DeathAppearMaxTime { get; set; } = DD2ModConfigCfg.DeathAppearMaxTime;
+    public static int DeathEncounterChance { get; set; } = DD2ModConfigCfg.DeathEncounterChance;
+    public static bool ShouldDeathAppearInMonsterRoom { get; set; } = DD2ModConfigCfg.ShouldDeathAppearInMonsterRoom;
+    public static bool ShouldDeathAppearInEliteRoom { get; set; } = DD2ModConfigCfg.ShouldDeathAppearInEliteRoom;
+    public static bool ShouldDeathAppearInBossRoom { get; set; } = DD2ModConfigCfg.ShouldDeathAppearInBossRoom;
+    public static bool ShouldEnhanceDeathAfterDefeat { get; set; } = DD2ModConfigCfg.ShouldEnhanceDeathAfterDefeat;
+
     public static int DeathAppearTime { get; set; } = 0;
     public static bool ShouldSpawnDeathThisRoom { get; set; } = false;
 
@@ -70,9 +75,7 @@ public class DeathListenForRunStateSingleton : CustomSingletonModel
 
             IsDeathExistingInCombat = CombatState?.HittableEnemies.Any((Creature c) => c.IsMonster && c.Monster is Death) ?? false;
 
-            ShouldSpawnDeathThisRoom = UseMultiplayerDefaultCondition ? 
-                CheckSpawnDeathConditionForMultiplayerDefault(combatRoom)
-                : CheckSpawnDeathCondition(combatRoom);
+            ShouldSpawnDeathThisRoom = CheckSpawnDeathCondition(combatRoom);
         }
         return Task.CompletedTask;
     }
@@ -97,18 +100,17 @@ public class DeathListenForRunStateSingleton : CustomSingletonModel
     {
         if (room is CombatRoom combatRoom)
         {
-            if (DD2ModConfigCfg.ShouldDeathOnlyHuntFlagellant
-                && !combatRoom.CombatState.Players.Any((Player p) => DD2Helper.IsFlagellant(p)))
+            if (ShouldDeathOnlyHuntFlagellant && !combatRoom.CombatState.Players.Any((Player p) => DD2Helper.IsFlagellant(p)))
             {
                 return false;
             }
 
-            if (combatRoom.Encounter.IsWeak || DeathAppearTime >= DD2ModConfigCfg.DeathAppearMaxTime)
+            if (combatRoom.Encounter.IsWeak || DeathAppearTime >= DeathAppearMaxTime)
             {
                 return false;
             }
 
-            int EncounterChance = Math.Clamp(DD2ModConfigCfg.DeathEncounterChance, 0, 100);
+            int EncounterChance = Math.Clamp(DeathEncounterChance, 0, 100);
             if (EncounterChance <= 0)
             {
                 return false;
@@ -131,37 +133,8 @@ public class DeathListenForRunStateSingleton : CustomSingletonModel
 
     private bool CheckCombatRoomTypeForSpawningDeath(CombatRoom room)
     {
-        return (DD2ModConfigCfg.ShouldDeathAppearInMonsterRoom && room.RoomType == RoomType.Monster)
-            || (DD2ModConfigCfg.ShouldDeathAppearInEliteRoom && room.RoomType == RoomType.Elite)
-            || (DD2ModConfigCfg.ShouldDeathAppearInBossRoom && room.RoomType == RoomType.Boss);
-    }
-
-    private bool CheckSpawnDeathConditionForMultiplayerDefault(AbstractRoom room)
-    {
-        if (room is CombatRoom combatRoom)
-        {
-            if (!combatRoom.CombatState.Players.Any((Player p) => DD2Helper.IsFlagellant(p)))
-            {
-                return false;
-            }
-
-            if (combatRoom.Encounter.IsWeak || DeathAppearTime >= 1 )
-            {
-                return false;
-            }
-
-            if (combatRoom.RoomType == RoomType.Monster)
-            {
-                //按理说应该只让这个Rng方法在所有玩家内只执行一次，多次执行会多人模式数据不同步，但是我没找到好的位置，所以自己写个哈希凑合一下
-                //int index0 = combatRoom.CombatState.RunState.Rng.UpFront.NextInt(0, 99);
-                ICombatState combatState = combatRoom.CombatState;
-                int index = DD2RngHelper.GetRandomIndex(combatState, 100);
-                if (index >= 0 && index < 6)
-                {
-                    return true;
-                }
-            }
-        }
-        return false;
+        return (ShouldDeathAppearInMonsterRoom && room.RoomType == RoomType.Monster)
+            || (ShouldDeathAppearInEliteRoom && room.RoomType == RoomType.Elite)
+            || (ShouldDeathAppearInBossRoom && room.RoomType == RoomType.Boss);
     }
 }

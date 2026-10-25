@@ -49,6 +49,11 @@ _subresources={
 "use_external/fallback_path": "res://DD2ModConfig_Asset/Monster_Death/Texture/WPN_death.tres",
 "use_external/path": "uid://c8s6r6413owe"
 }
+},
+"nodes": {
+"PATH:AnimationPlayer": {
+"import/skip_import": true
+}
 }
 }
 gltf/naming_version=2

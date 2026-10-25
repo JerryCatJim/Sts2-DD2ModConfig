@@ -197,7 +197,7 @@ public class DD2AudioManager
         {
             case "Death":
             case "Mountain":
-                return "res://DD2ModConfig/Sounds/Bgm/DD2_TheMountain_BGM.mp3";
+                return "res://DD2ModConfig/Sounds/Bgm/DD2_TheMountain_BGM.ogg";
             default:
                 return "";
         }

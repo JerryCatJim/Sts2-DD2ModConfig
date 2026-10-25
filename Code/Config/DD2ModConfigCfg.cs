@@ -31,7 +31,7 @@ internal class DD2ModConfigCfg : SimpleModConfig
     public static bool ShouldShowDeathEncounterVfx { get; set; } = true;
     public static bool ShouldPlayDeathEncounterBgm { get; set; } = true;
     [ConfigSection("DeathEncounter")]
-    public static bool ShouldMultiplayerUseDefaultCondition { get; set; } = true;
+    public static bool HostAuthorityInMultiplayerMode { get; set; } = true;
     public static bool ShouldDeathOnlyHuntFlagellant { get; set; } = true;
 
     [ConfigSlider(0, 100, 1, Format = "{0:0}%")]

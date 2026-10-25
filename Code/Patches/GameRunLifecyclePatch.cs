@@ -1,4 +1,6 @@
+using BaseLib.Abstracts;
 using DD2ModConfig.Code.Helper;
+using DD2ModConfig.Code.NetMessage;
 using DD2ModConfig.Code.Relics;
 using HarmonyLib;
 using MegaCrit.Sts2.Core.Commands;
@@ -32,7 +34,34 @@ public static class OnGameStartedPatch
             Player? mePlayer = state.Players.FirstOrDefault(p => p.NetId == RunManager.Instance.NetService.NetId);
             if (mePlayer != null)
             {
+                if (DD2Helper.IsHostPlayer(mePlayer))
+                {
+                    var msg = new SyncSpawnDeathMessage();
+                    CustomMessageWrapper.Send(msg);
+                }
                 TaskHelper.RunSafely(RelicCmd.Obtain(ModelDb.Relic<StressCounterRelic>().ToMutable(), mePlayer));
+            }
+        }
+    }
+}
+
+[HarmonyPatch(typeof(RunManager), "InitializeSavedRun")] 
+public static class OnGameStartedFromSavePatch
+{
+    public static void Postfix(RunManager __instance)
+    {
+        RunState? state = Traverse.Create(__instance).Property("State").GetValue<RunState>();
+        if (state != null)
+        {
+            //直接复制的上面的，不知道此时LocalContext里的NetId是否为空，反正不会出错
+            Player? mePlayer = state.Players.FirstOrDefault(p => p.NetId == RunManager.Instance.NetService.NetId);
+            if (mePlayer != null)
+            {
+                if (DD2Helper.IsHostPlayer(mePlayer))
+                {
+                    var msg = new SyncSpawnDeathMessage();
+                    CustomMessageWrapper.Send(msg);
+                }
             }
         }
     }

@@ -12,9 +12,12 @@ using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Models.Powers;
+using MegaCrit.Sts2.Core.Multiplayer;
+using MegaCrit.Sts2.Core.Multiplayer.Game;
 using MegaCrit.Sts2.Core.Nodes;
 using MegaCrit.Sts2.Core.Nodes.Combat;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
+using MegaCrit.Sts2.Core.Runs;
 
 namespace DD2ModConfig.Code.Helper;
 
@@ -111,7 +114,20 @@ public static class DD2Helper
         DD2AudioManager.StopDD2Bgm();
         ResetCombatDictionaries();
     }
+    public static bool IsHostPlayer(Player player)
+    {
+        var net = RunManager.Instance?.NetService;
+        if (net == null) return false;
 
+        return net switch
+        {
+            { Type: NetGameType.Singleplayer } => true,
+            { Type: NetGameType.Replay } => true,
+            NetHostGameService host => player.NetId == host.NetId,
+            NetClientGameService client => player.NetId == client.HostNetId,
+            _ => false,
+        };
+    }
     public static decimal GetDeathDoorPercent(Creature creature)
     {
         if (creature == null) return 0m;

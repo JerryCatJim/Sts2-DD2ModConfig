@@ -50,7 +50,7 @@ public class Death : CustomMonsterModel, IGetDD2MonsterType
         }
     }
     private int CurrentAppearedTimes => DeathListenForRunStateSingleton.DeathAppearTime <= 0 ? 1 : DeathListenForRunStateSingleton.DeathAppearTime + 1;
-    private bool ShouldEnhance => CurrentAppearedTimes >= 2 && DD2ModConfigCfg.ShouldEnhanceDeathAfterDefeat;
+    private bool ShouldEnhance => CurrentAppearedTimes >= 2 && DeathListenForRunStateSingleton.ShouldEnhanceDeathAfterDefeat;
     private int HpMultiple => ShouldEnhance ? CurrentAppearedTimes : 1;
     private int ExtraEnhancedValue => CurrentAppearedTimes >= 2 && ShouldEnhance ? CurrentAppearedTimes : 0;
 

@@ -35,9 +35,9 @@
   "DD2MODCONFIG-SHOULD_DEATH_ONLY_HUNT_FLAGELLANT.hover.desc": "체크 시 멀티플레이어 모드에서 팀에 고행자가 있는 경우에만 사신과 조우할 수 있습니다.",
   "DD2MODCONFIG-SHOULD_DEATH_ONLY_HUNT_FLAGELLANT.hover.title": "체크 해제 시 모든 캐릭터가 사신과 조우할 수 있습니다.",
   "DD2MODCONFIG-SHOULD_DEATH_ONLY_HUNT_FLAGELLANT.title": "사신이 고행자만 노리게 할지 여부",
-  "DD2MODCONFIG-SHOULD_MULTIPLAYER_USE_DEFAULT_CONDITION.hover.desc": "체크 시 멀티플레이어 모드에서 기본 설정이 사용됩니다. 체크 해제 시 주의하세요! 모든 온라인 플레이어가 동일한 설정값을 사용해야 하며, 그렇지 않으면 사신 조우 시 데이터 동기화 문제가 발생할 확률이 있습니다!",
-  "DD2MODCONFIG-SHOULD_MULTIPLAYER_USE_DEFAULT_CONDITION.hover.title": "멀티플레이어에서 기본 조건 사용 여부",
-  "DD2MODCONFIG-SHOULD_MULTIPLAYER_USE_DEFAULT_CONDITION.title": "멀티플레이어에서 기본 조건 사용 여부",
+  "DD2MODCONFIG-HOST_AUTHORITY_IN_MULTIPLAYER_MODE.title": "멀티플레이어 모드 호스트 권한",
+  "DD2MODCONFIG-HOST_AUTHORITY_IN_MULTIPLAYER_MODE.hover.title": "멀티플레이어 모드 호스트 권한",
+  "DD2MODCONFIG-HOST_AUTHORITY_IN_MULTIPLAYER_MODE.hover.desc": "멀티플레이어 모드의 호스트 권한입니다. 단순한 알림으로, 체크 여부는 결과에 영향을 주지 않습니다.",
   "DD2MODCONFIG-DEATH_VFX_AND_BGM.title": "사신 시각 효과 및 BGM",
   "DD2MODCONFIG-SHOULD_PLAY_DEATH_ENCOUNTER_BGM.title": "사신 조우 BGM 재생 여부",
   "DD2MODCONFIG-SHOULD_SHOW_DEATH_ENCOUNTER_VFX.title": "사신 조우 시각 효과 표시 여부"
