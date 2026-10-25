@@ -60,6 +60,18 @@ public class DeathListenForRunStateSingleton : CustomSingletonModel
         IsDeathExistingInCombat = false;
     }
 
+    public static void RefreshValueByLocalConfig()
+    {
+        ShouldPredictWhetherDeathWillAppear = DD2ModConfigCfg.PredictWhetherDeathWillAppear;
+        ShouldDeathOnlyHuntFlagellant = DD2ModConfigCfg.ShouldDeathOnlyHuntFlagellant;
+        DeathAppearMaxTime = DD2ModConfigCfg.DeathAppearMaxTime;
+        DeathEncounterChance = DD2ModConfigCfg.DeathEncounterChance;
+        ShouldDeathAppearInMonsterRoom = DD2ModConfigCfg.ShouldDeathAppearInMonsterRoom;
+        ShouldDeathAppearInEliteRoom = DD2ModConfigCfg.ShouldDeathAppearInEliteRoom;
+        ShouldDeathAppearInBossRoom = DD2ModConfigCfg.ShouldDeathAppearInBossRoom;
+        ShouldEnhanceDeathAfterDefeat = DD2ModConfigCfg.ShouldEnhanceDeathAfterDefeat;
+    }
+
     public override Task AfterRoomEntered(AbstractRoom room)
     {
         NAudioManager.Instance?.SetBgmVol(SaveManager.Instance.SettingsSave.VolumeBgm);

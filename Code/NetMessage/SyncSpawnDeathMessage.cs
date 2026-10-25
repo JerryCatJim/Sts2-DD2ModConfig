@@ -51,12 +51,12 @@ public class SyncSpawnDeathMessage : ICustomMessage
         DeathListenForRunStateSingleton.ShouldEnhanceDeathAfterDefeat = ShouldEnhanceDeathAfterDefeat;
     }
 
-    public static bool ShouldPredictWhetherDeathWillAppear { get; set; } = DD2ModConfigCfg.PredictWhetherDeathWillAppear;
-    public static bool ShouldDeathOnlyHuntFlagellant { get; set; } = DD2ModConfigCfg.ShouldDeathOnlyHuntFlagellant;
-    public static int DeathAppearMaxTime { get; set; } = DD2ModConfigCfg.DeathAppearMaxTime;
-    public static int DeathEncounterChance { get; set; } = DD2ModConfigCfg.DeathEncounterChance;
-    public static bool ShouldDeathAppearInMonsterRoom { get; set; } = DD2ModConfigCfg.ShouldDeathAppearInMonsterRoom;
-    public static bool ShouldDeathAppearInEliteRoom { get; set; } = DD2ModConfigCfg.ShouldDeathAppearInEliteRoom;
-    public static bool ShouldDeathAppearInBossRoom { get; set; } = DD2ModConfigCfg.ShouldDeathAppearInBossRoom;
-    public static bool ShouldEnhanceDeathAfterDefeat { get; set; } = DD2ModConfigCfg.ShouldEnhanceDeathAfterDefeat;
+    public bool ShouldPredictWhetherDeathWillAppear { get; set; } = DD2ModConfigCfg.PredictWhetherDeathWillAppear;
+    public bool ShouldDeathOnlyHuntFlagellant { get; set; } = DD2ModConfigCfg.ShouldDeathOnlyHuntFlagellant;
+    public int DeathAppearMaxTime { get; set; } = DD2ModConfigCfg.DeathAppearMaxTime;
+    public int DeathEncounterChance { get; set; } = DD2ModConfigCfg.DeathEncounterChance;
+    public bool ShouldDeathAppearInMonsterRoom { get; set; } = DD2ModConfigCfg.ShouldDeathAppearInMonsterRoom;
+    public bool ShouldDeathAppearInEliteRoom { get; set; } = DD2ModConfigCfg.ShouldDeathAppearInEliteRoom;
+    public bool ShouldDeathAppearInBossRoom { get; set; } = DD2ModConfigCfg.ShouldDeathAppearInBossRoom;
+    public bool ShouldEnhanceDeathAfterDefeat { get; set; } = DD2ModConfigCfg.ShouldEnhanceDeathAfterDefeat;
 }

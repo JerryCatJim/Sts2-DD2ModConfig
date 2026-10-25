@@ -1,5 +1,6 @@
 using BaseLib.Abstracts;
 using DD2ModConfig.Code.Helper;
+using DD2ModConfig.Code.Monster.DeathMonster;
 using DD2ModConfig.Code.NetMessage;
 using DD2ModConfig.Code.Relics;
 using HarmonyLib;
@@ -36,6 +37,7 @@ public static class OnGameStartedPatch
             {
                 if (DD2Helper.IsHostPlayer(mePlayer))
                 {
+                    DeathListenForRunStateSingleton.RefreshValueByLocalConfig();
                     var msg = new SyncSpawnDeathMessage();
                     CustomMessageWrapper.Send(msg);
                 }
@@ -59,6 +61,7 @@ public static class OnGameStartedFromSavePatch
             {
                 if (DD2Helper.IsHostPlayer(mePlayer))
                 {
+                    DeathListenForRunStateSingleton.RefreshValueByLocalConfig();
                     var msg = new SyncSpawnDeathMessage();
                     CustomMessageWrapper.Send(msg);
                 }
