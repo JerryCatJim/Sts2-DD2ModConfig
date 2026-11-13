@@ -24,7 +24,7 @@ public sealed class SpawnDeathPower : DD2ModConfigPowerModel
     private bool ShouldSpawnDeath { get; set; } = false;
     private IEnumerable<Creature>? UnremovedCreatures { get; set; }
 
-    public override async Task AfterDeath(PlayerChoiceContext choiceContext, Creature target, bool wasRemovalPrevented, float deathAnimLength)
+    public override async Task AfterDeath(PlayerChoiceContext choiceContext, Creature target, CardModel? source, bool wasRemovalPrevented, float deathAnimLength)
     {
         if (!wasRemovalPrevented && target == base.Owner && target.IsPrimaryEnemy && target.Monster is not Death
             && !target.Powers.Any((PowerModel p) => p is not SpawnDeathPower && p.ShouldStopCombatFromEnding())

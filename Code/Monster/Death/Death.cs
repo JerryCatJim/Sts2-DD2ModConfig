@@ -149,7 +149,7 @@ public class Death : CustomMonsterModel, IGetDD2MonsterType
         await Cmd.CustomScaledWait(2f, 2f, true);
     }
 
-    public override Task AfterDeath(PlayerChoiceContext choiceContext, Creature creature, bool wasRemovalPrevented, float deathAnimLength)
+    public override Task AfterDeath(PlayerChoiceContext choiceContext, Creature creature, CardModel? source, bool wasRemovalPrevented, float deathAnimLength)
     {
         if (creature != Creature || CombatState == null) return Task.CompletedTask;
         if (!Hook.ShouldDie(CombatState.RunState, CombatState, creature, out _)) return Task.CompletedTask;

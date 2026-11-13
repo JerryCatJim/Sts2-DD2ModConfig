@@ -304,6 +304,7 @@ script = ExtResource("2_yxteo")
 own_world_3d = true
 transparent_bg = true
 handle_input_locally = false
+msaa_3d = 2
 size = Vector2i(1000, 800)
 render_target_update_mode = 4
 
