@@ -4,5 +4,11 @@
   "DD2MODCONFIG-DEATHS_HEAD.description": "当你的生命值将要降低至[blue]0[/blue]或以下时，回复到最大生命值的[green]{Heal}%[/green]（仅能起效一次）。",
   "DD2MODCONFIG-STRESS_COUNTER_RELIC.title": "压力计数器",
   "DD2MODCONFIG-STRESS_COUNTER_RELIC.flavor": "[red]我们的家族没落了。[/red]",
-  "DD2MODCONFIG-STRESS_COUNTER_RELIC.description": "记录着你的当前[gold]压力[/gold]。在战斗结束时，保留你的[gold]压力[/gold]。"
+  "DD2MODCONFIG-STRESS_COUNTER_RELIC.description": "记录着你的当前[gold]压力[/gold]。在战斗结束时，保留你的[gold]压力[/gold]。",
+  "DD2MODCONFIG-DEATHS_HEAD_DAMAGE.title": "死神之颅",
+  "DD2MODCONFIG-DEATHS_HEAD_DAMAGE.flavor": "[red]你可以逃跑，但你无法躲藏！[/red]",
+  "DD2MODCONFIG-DEATHS_HEAD_DAMAGE.description": "若你的生命小于等于[green]{LowHealthPercent}%[/green]，则造成的攻击伤害增加[blue]{AdditionalDamagePercent}%[/blue]。",
+  "DD2MODCONFIG-DEATHS_HEAD_BLOCK.title": "死神之颅",
+  "DD2MODCONFIG-DEATHS_HEAD_BLOCK.flavor": "[red]你可以逃跑，但你无法躲藏！[/red]",
+  "DD2MODCONFIG-DEATHS_HEAD_BLOCK.description": "若你的生命小于等于[green]{LowHealthPercent}%[/green]，则在你的回合开始时，获得[blue]{Block}[/blue]点[gold]格挡[/gold]。"
 }

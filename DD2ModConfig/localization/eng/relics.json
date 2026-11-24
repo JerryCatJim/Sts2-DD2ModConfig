@@ -4,5 +4,11 @@
   "DD2MODCONFIG-DEATHS_HEAD.description": "When your HP would be reduced to [blue]0[/blue], heal to [green]{Heal}%[/green] of your Max HP instead (works once).",
   "DD2MODCONFIG-STRESS_COUNTER_RELIC.title": "Stress Counter",
   "DD2MODCONFIG-STRESS_COUNTER_RELIC.flavor": "[red]Ruin has come to our family.[/red]",
-  "DD2MODCONFIG-STRESS_COUNTER_RELIC.description": "Record your current [gold]Stress[/gold]. At the end of combat, retain your [gold]Stress[/gold]."
+  "DD2MODCONFIG-STRESS_COUNTER_RELIC.description": "Record your current [gold]Stress[/gold]. At the end of combat, retain your [gold]Stress[/gold].",
+  "DD2MODCONFIG-DEATHS_HEAD_DAMAGE.title": "Death's Head",
+  "DD2MODCONFIG-DEATHS_HEAD_DAMAGE.flavor": "[red]You can run...But no can hide![/red]",
+  "DD2MODCONFIG-DEATHS_HEAD_DAMAGE.description": "If your HP is [green]{LowHealthPercent}%[/green] or less, deal [blue]{AdditionalDamagePercent}%[/blue] additional attack damage.",
+  "DD2MODCONFIG-DEATHS_HEAD_BLOCK.title": "Death's Head",
+  "DD2MODCONFIG-DEATHS_HEAD_BLOCK.flavor": "[red]You can run...But no can hide![/red]",
+  "DD2MODCONFIG-DEATHS_HEAD_BLOCK.description": "If your HP is [green]{LowHealthPercent}%[/green] or less, at the start of your turn, gain [blue]{Block}[/blue] [gold]Block[/gold]."
 }

@@ -11,6 +11,7 @@ using MegaCrit.Sts2.Core.Assets;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Ascension;
 using MegaCrit.Sts2.Core.Entities.Creatures;
+using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Hooks;
@@ -137,7 +138,7 @@ public class Death : CustomMonsterModel, IGetDD2MonsterType
             {
                 PotionReward potionReward = new PotionReward(player);
                 combatRoom.AddExtraReward(player, new CardReward(CardCreationOptions.ForRoom(player, RoomType.Boss), 3, player));
-                combatRoom.AddExtraReward(player, new RelicReward(ModelDb.Relic<DeathsHead>().ToMutable(), player));
+                combatRoom.AddExtraReward(player, new RelicReward(GetRandomDeathHeadReward(player), player));
                 combatRoom.AddExtraReward(player, potionReward);
                 combatRoom.AddExtraReward(player, new GoldReward(66, player));
             }
@@ -321,5 +322,18 @@ public class Death : CustomMonsterModel, IGetDD2MonsterType
     private bool IsFlagellant(Creature creature)
     {
         return DD2Helper.IsFlagellant(creature);
+    }
+    private RelicModel GetRandomDeathHeadReward(Player player)
+    {
+        if (player == null) return ModelDb.Relic<DeathsHead>().ToMutable();
+
+        int index = player.PlayerRng.Rewards.NextInt(0, 3);
+        return index switch
+        {
+            0 => ModelDb.Relic<DeathsHead>().ToMutable(),
+            1 => ModelDb.Relic<DeathsHead_Damage>().ToMutable(),
+            2 => ModelDb.Relic<DeathsHead_Block>().ToMutable(),
+            _ => ModelDb.Relic<DeathsHead>().ToMutable(),
+        };
     }
 }

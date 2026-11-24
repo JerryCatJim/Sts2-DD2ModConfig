@@ -12,8 +12,8 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<Version>0.0.8</Version>
-		<FileVersion>0.0.8</FileVersion>
+		<Version>0.0.9</Version>
+		<FileVersion>0.0.9</FileVersion>
 		<AssemblyVersion>0.0.1</AssemblyVersion>
 	</PropertyGroup>
 	<PropertyGroup>
@@ -164,7 +164,7 @@
 
 		<Message Text="Copying BaseLib to mods folder." Importance="high" />
 		<ItemGroup>
-			<BaseLibFiles Include="$(BaseLibPath)/BaseLib.dll;$(BaseLibPath)/BaseLib.pck;$(BaseLibPath)/BaseLib.json;" />
+			<BaseLibFiles Include="$(BaseLibPath)/*" />
 		</ItemGroup>
 		<Copy SourceFiles="@(BaseLibFiles)" DestinationFolder="$(ModsPath)BaseLib/" />
 	</Target>
