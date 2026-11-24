@@ -22,6 +22,7 @@
   "DD2MODCONFIG-SHOULD_PLAYER_SHOW_DEATH_BLOW_VFX.title": "Should Player Show Death Blow Vfx",
   "DD2MODCONFIG-SHOULD_MONSTER_SHOW_DEATH_BLOW_VFX.title": "Should Monster Show Death Blow Vfx",
   "DD2MODCONFIG-SHOULD_PET_SHOW_DEATH_BLOW_VFX.title": "Should Pet Show Death Blow Vfx",
+  "DD2MODCONFIG-VFX_CUSTOM_SIZE.title": "Vfx Custom Size",
   "DD2MODCONFIG-DEATH_ENCOUNTER.title": "Death Encounter (Would not in Weak Encounter)",
   "DD2MODCONFIG-HOST_AUTHORITY_IN_MULTIPLAYER_MODE.title": "Host Authority In Multiplayer Mode",
   "DD2MODCONFIG-HOST_AUTHORITY_IN_MULTIPLAYER_MODE.hover.title": "Host Authority In Multiplayer Mode",

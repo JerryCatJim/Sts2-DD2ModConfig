@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36811.4 d17.14
+VisualStudioVersion = 17.14.36811.4
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DD2ModConfig", "DD2ModConfig.csproj", "{A0B098B1-43C5-1D9E-4059-D9EF6D58BF35}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DD2ModConfig.Loader", "DD2ModConfig.Loader\DD2ModConfig.Loader.csproj", "{C9097478-F72F-4EC9-80E6-AB16721BE7BF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,6 +20,12 @@ Global
 		{A0B098B1-43C5-1D9E-4059-D9EF6D58BF35}.ExportDebug|Any CPU.Build.0 = ExportDebug|Any CPU
 		{A0B098B1-43C5-1D9E-4059-D9EF6D58BF35}.ExportRelease|Any CPU.ActiveCfg = ExportRelease|Any CPU
 		{A0B098B1-43C5-1D9E-4059-D9EF6D58BF35}.ExportRelease|Any CPU.Build.0 = ExportRelease|Any CPU
+		{C9097478-F72F-4EC9-80E6-AB16721BE7BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9097478-F72F-4EC9-80E6-AB16721BE7BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9097478-F72F-4EC9-80E6-AB16721BE7BF}.ExportDebug|Any CPU.ActiveCfg = Release|Any CPU
+		{C9097478-F72F-4EC9-80E6-AB16721BE7BF}.ExportDebug|Any CPU.Build.0 = Release|Any CPU
+		{C9097478-F72F-4EC9-80E6-AB16721BE7BF}.ExportRelease|Any CPU.ActiveCfg = Release|Any CPU
+		{C9097478-F72F-4EC9-80E6-AB16721BE7BF}.ExportRelease|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

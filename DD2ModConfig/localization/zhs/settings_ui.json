@@ -22,6 +22,7 @@
   "DD2MODCONFIG-SHOULD_PLAYER_SHOW_DEATH_BLOW_VFX.title": "玩家是否播放致命一击特效",
   "DD2MODCONFIG-SHOULD_MONSTER_SHOW_DEATH_BLOW_VFX.title": "怪物是否播放致命一击特效",
   "DD2MODCONFIG-SHOULD_PET_SHOW_DEATH_BLOW_VFX.title": "宠物是否播放致命一击特效",
+  "DD2MODCONFIG-VFX_CUSTOM_SIZE.title": "特效自定义大小",
   "DD2MODCONFIG-DEATH_VFX_AND_BGM.title": "死神相关的视觉效果和背景音乐",
   "DD2MODCONFIG-SHOULD_SHOW_DEATH_ENCOUNTER_VFX.title": "是否播放与死神战斗时的全屏特效",
   "DD2MODCONFIG-SHOULD_PLAY_DEATH_ENCOUNTER_BGM.title": "是否播放与死神战斗时的背景音乐",

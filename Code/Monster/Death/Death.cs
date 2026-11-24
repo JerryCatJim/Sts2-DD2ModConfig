@@ -149,10 +149,14 @@ public class Death : CustomMonsterModel, IGetDD2MonsterType
         await Cmd.CustomScaledWait(2f, 2f, true);
     }
 
-    public override Task AfterDeath(PlayerChoiceContext choiceContext, Creature creature, CardModel? source, bool wasRemovalPrevented, float deathAnimLength)
+#if STS2_AT_LEAST_0_113_0
+    public override Task AfterDeath(PlayerChoiceContext choiceContext, Creature target, CardModel? source, bool wasRemovalPrevented, float deathAnimLength)
+#elif STS2_AT_LEAST_0_111_0
+    public override Task AfterDeath(PlayerChoiceContext choiceContext, Creature target, bool wasRemovalPrevented, float deathAnimLength)
+#endif
     {
-        if (creature != Creature || CombatState == null) return Task.CompletedTask;
-        if (!Hook.ShouldDie(CombatState.RunState, CombatState, creature, out _)) return Task.CompletedTask;
+        if (target != Creature || CombatState == null) return Task.CompletedTask;
+        if (!Hook.ShouldDie(CombatState.RunState, CombatState, target, out _)) return Task.CompletedTask;
 
         DeathListenForRunStateSingleton.IsDeathExistingInCombat = CombatState.HittableEnemies.Any((Creature c) => c.IsAlive && c.Monster is Death);
         if (DeathListenForRunStateSingleton.IsDeathExistingInCombat == false)

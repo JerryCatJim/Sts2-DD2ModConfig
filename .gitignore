@@ -1,6 +1,8 @@
 # Godot 4+ specific ignores
 .godot/
 bin/
+DD2ModConfig.Loader/bin/
+DD2ModConfig.Loader/obj/
 !bin/windows/libspine_godot.windows.editor.x86_64.dll
 !bin/windows/libspine_godot.windows.template_debug.x86_64.dll
 !bin/windows/libspine_godot.windows.template_release.x86_64.dll

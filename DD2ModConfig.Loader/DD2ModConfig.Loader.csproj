@@ -1,0 +1,56 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+	<AssemblyName>DD2ModConfig.Loader</AssemblyName>
+	<RootNamespace>DD2ModConfig.Loader</RootNamespace>
+	<EnableDynamicLoading>true</EnableDynamicLoading>
+  </PropertyGroup>
+
+  <PropertyGroup>
+	  <Version>0.0.8</Version>
+	  <FileVersion>0.0.8</FileVersion>
+	  <AssemblyVersion>0.0.1</AssemblyVersion>
+  </PropertyGroup>
+
+	<!-- OS Detection -->
+  <PropertyGroup>
+	<IsWindows>false</IsWindows>
+	<IsLinux>false</IsLinux>
+	<IsOSX>false</IsOSX>
+	<IsWindows Condition="$([MSBuild]::IsOSPlatform('Windows'))">true</IsWindows>
+	<IsLinux Condition="$([MSBuild]::IsOSPlatform('Linux'))">true</IsLinux>
+	<IsOSX Condition="$([MSBuild]::IsOSPlatform('OSX'))">true</IsOSX>
+  </PropertyGroup>
+
+  <!-- Windows -->
+  <PropertyGroup Condition="'$(IsWindows)' == 'true'">
+	<GodotPath Condition="'$(GodotPath)' == ''">$(GodotWinPath)</GodotPath>
+	<SteamLibraryPath Condition="'$(SteamLibraryPath)' == ''">$(SteamLibraryWinPath)</SteamLibraryPath>
+	<Sts2Path Condition="'$(Sts2Path)' == ''">$(SteamLibraryPath)/common/Slay the Spire 2</Sts2Path>
+	<ModsPath Condition="'$(ModsPath)' == ''">$(Sts2Path)/mods/</ModsPath>
+	<Sts2DataDir Condition="'$(Sts2DataDir)' == ''">$(Sts2Path)/data_sts2_windows_x86_64</Sts2DataDir>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="Directory.Build.props" />
+  </ItemGroup>
+	
+  <ItemGroup>
+	<Reference Include="0Harmony">
+		<HintPath>$(Sts2DataDir)/0Harmony.dll</HintPath>
+		<Private>false</Private>
+	</Reference>
+	<Reference Include="sts2">
+		<HintPath>$(Sts2DataDir)/sts2.dll</HintPath>
+		<Private>false</Private>
+	</Reference>
+  </ItemGroup>
+
+  <Target Name="CopyToModsFolderOnBuild" AfterTargets="CopyFilesToOutputDirectory">
+	<Message Text="Copying .dll and manifest to mods folder." Importance="high" />
+	<Copy SourceFiles="$(OutDir)$(TargetFileName)" DestinationFiles="$(ModsPath)/DD2ModConfig/DD2ModConfig.dll" />
+  </Target>
+
+</Project>

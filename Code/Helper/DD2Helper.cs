@@ -235,7 +235,7 @@ public static class DD2Helper
                 NCombatRoom.Instance.CombatVfxContainer.AddChild(vfxNode);
             }
             vfxNode.GlobalPosition = globalPos;
-            vfxNode.Scale = visualScale;
+            vfxNode.Scale = visualScale * (float)DD2ModConfigCfg.VfxCustomSize/100f;
         }
         else
         {

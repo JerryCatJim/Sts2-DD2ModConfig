@@ -26,6 +26,8 @@ internal class DD2ModConfigCfg : SimpleModConfig
     public static bool ShouldPlayerShowDeathBlowVfx { get; set; } = true;
     public static bool ShouldMonsterShowDeathBlowVfx { get; set; } = true;
     public static bool ShouldPetShowDeathBlowVfx { get; set; } = false;
+    [ConfigSlider(50, 200, 1, Format = "{0:0} %")]
+    public static int VfxCustomSize { get; set; } = 100;
 
     [ConfigSection("DeathVfxAndBgm")]
     public static bool ShouldShowDeathEncounterVfx { get; set; } = true;

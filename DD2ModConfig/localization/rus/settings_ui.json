@@ -22,6 +22,7 @@
   "DD2MODCONFIG-SHOULD_PLAYER_SHOW_DEATH_BLOW_VFX.title": "Показывать VFX Смертельного удара для игрока",
   "DD2MODCONFIG-SHOULD_MONSTER_SHOW_DEATH_BLOW_VFX.title": "Показывать VFX Смертельного удара для монстров",
   "DD2MODCONFIG-SHOULD_PET_SHOW_DEATH_BLOW_VFX.title": "Показывать VFX Смертельного удара для питомцев",
+  "DD2MODCONFIG-VFX_CUSTOM_SIZE.title": "VFX Пользовательский размер",
   "DD2MODCONFIG-DEATH_ENCOUNTER.title": "Встреча со Смертью (не в слабых встречах)",
   "DD2MODCONFIG-HOST_AUTHORITY_IN_MULTIPLAYER_MODE.title": "Полномочия хоста в многопользовательском режиме",
   "DD2MODCONFIG-HOST_AUTHORITY_IN_MULTIPLAYER_MODE.hover.title": "Полномочия хоста в многопользовательском режиме",

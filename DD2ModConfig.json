@@ -3,10 +3,10 @@
 "name": "DD2ModConfig",
 "author": "Jerry",
 "description": "Mod Lib for some Darkeset Dungeon Style Mods.",
-"version": "0.0.7",
+"version": "0.0.8",
 "has_pck": true,
 "has_dll": true,
-"min_game_version": "0.113.0",
+"min_game_version": "0.111.0",
 "dependencies": [
 {
 "id": "BaseLib",
