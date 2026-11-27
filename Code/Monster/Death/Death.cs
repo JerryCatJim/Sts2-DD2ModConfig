@@ -7,7 +7,6 @@ using DD2ModConfig.Code.Helper;
 using DD2ModConfig.Code.Powers;
 using DD2ModConfig.Code.Relics;
 using Godot;
-using MegaCrit.Sts2.Core.Assets;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Ascension;
 using MegaCrit.Sts2.Core.Entities.Creatures;
@@ -75,8 +74,6 @@ public class Death : CustomMonsterModel, IGetDD2MonsterType
     // 如果你挂载了自己的自定义脚本，使用这个(挂了也用上面的，这个会卡死)
     //public override string? CustomVisualPath => "res://DD2ModConfig_Asset/Monster_Death/Death.tscn";
 
-    private Node2D? _vfxInstance;
-
     // 战斗开始时，在这里给自己上buff之类
     public override async Task AfterAddedToRoom()
     {
@@ -89,34 +86,16 @@ public class Death : CustomMonsterModel, IGetDD2MonsterType
             DeathNode.Visible = true;
         }
 
-        //若多个死神同时出现只加载一次滤镜和BGM
         if (DeathListenForRunStateSingleton.IsDeathExistingInCombat == false)
         {
-            if (DD2ModConfigCfg.ShouldShowDeathEncounterVfx)
-            {
-                _vfxInstance = PreloadManager.Cache.GetScene("res://DD2ModConfig_Asset/Monster_Death/EnterEffect/EnterEffect.tscn").Instantiate<Node2D>();
-                if (_vfxInstance == null) return;
-
-                _vfxInstance.Position = Vector2.Zero;
-                _vfxInstance.Scale = Vector2.One;
-
-                var combatRoom = NCombatRoom.Instance;
-                if (combatRoom != null)
-                {
-                    if (_vfxInstance.GetParent() == null)
-                    {
-                        combatRoom.AddChild(_vfxInstance);
-                    }
-                }
-            }
+            //若多个死神同时出现只加载一次BGM
             if (DD2ModConfigCfg.ShouldPlayDeathEncounterBgm)
             {
                 DD2AudioManager.PlayDD2Bgm("Death");
             }
         }
-
-        MonsterAudioManager.PlayDeathSfx("Spawn", true);
         DeathListenForRunStateSingleton.IsDeathExistingInCombat = true;
+        MonsterAudioManager.PlayDeathSfx("Spawn", true);
 
         await PowerCmd.Apply<DeathArmorPower>(new ThrowingPlayerChoiceContext(), Creature, DeathArmorNum, Creature, null, true);
         if (ExtraEnhancedValue > 0)
@@ -128,7 +107,7 @@ public class Death : CustomMonsterModel, IGetDD2MonsterType
     public override async Task BeforeDeath(Creature creature)
     {
         if (creature != Creature || CombatState == null) return;
-        if (!Hook.ShouldDie(CombatState.RunState, CombatState, creature, out _)) return;
+        if (creature.MaxHp > 0 && !Hook.ShouldDie(CombatState.RunState, CombatState, creature, out _)) return;
 
         //奖励生成别放在AfterDeath，多人模式会不生效（可能是结算顺序问题）
         AbstractRoom? currentRoom = CombatState.RunState.CurrentRoom;
@@ -145,32 +124,36 @@ public class Death : CustomMonsterModel, IGetDD2MonsterType
         }
 
         MonsterAudioManager.PlayDeathSfx("Dead", true);
-
         await CreatureCmd.TriggerAnim(Creature, "Dead", 0);
-        await Cmd.CustomScaledWait(2f, 2f, true);
+        //await Cmd.CustomScaledWait(2f, 2f, true);
+
+        DeathListenForRunStateSingleton.IsDeathExistingInCombat = CombatState.HittableEnemies.Any((Creature c) => c.IsAlive && c.Monster is Death);
+        if (DeathListenForRunStateSingleton.IsDeathExistingInCombat == false)
+        {
+            DeathListenForRunStateSingleton.DeathAppearTime++;
+            await Cmd.CustomScaledWait(1f, 1f, true);
+            DD2MonsterHelper.ClearDeathSpawnVfxAndBgm();
+            await Cmd.CustomScaledWait(1f, 1f, true);
+        }
     }
 
-#if STS2_AT_LEAST_0_113_0
+/*#if STS2_AT_LEAST_0_113_0
     public override Task AfterDeath(PlayerChoiceContext choiceContext, Creature target, CardModel? source, bool wasRemovalPrevented, float deathAnimLength)
 #elif STS2_AT_LEAST_0_111_0
     public override Task AfterDeath(PlayerChoiceContext choiceContext, Creature target, bool wasRemovalPrevented, float deathAnimLength)
 #endif
     {
         if (target != Creature || CombatState == null) return Task.CompletedTask;
-        if (!Hook.ShouldDie(CombatState.RunState, CombatState, target, out _)) return Task.CompletedTask;
+        if (target.MaxHp > 0 && !Hook.ShouldDie(CombatState.RunState, CombatState, target, out _)) return Task.CompletedTask;
 
         DeathListenForRunStateSingleton.IsDeathExistingInCombat = CombatState.HittableEnemies.Any((Creature c) => c.IsAlive && c.Monster is Death);
         if (DeathListenForRunStateSingleton.IsDeathExistingInCombat == false)
         {
             DeathListenForRunStateSingleton.DeathAppearTime++;
-            DD2AudioManager.StopDD2Bgm();
-            if (_vfxInstance != null)
-            {
-                _vfxInstance.QueueFree();
-            }
+            DD2MonsterHelper.ClearDeathSpawnVfxAndBgm();
         }
         return Task.CompletedTask;
-    }
+    }*/
 
     protected override MonsterMoveStateMachine GenerateMoveStateMachine()
     {

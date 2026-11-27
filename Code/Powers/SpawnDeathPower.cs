@@ -1,4 +1,5 @@
 using DD2ModConfig.Code.Abstract;
+using DD2ModConfig.Code.Helper;
 using DD2ModConfig.Code.Monster.DeathMonster;
 using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
@@ -60,7 +61,9 @@ public sealed class SpawnDeathPower : DD2ModConfigPowerModel
                     }
                 }
 
-                await Cmd.CustomScaledWait(2.5f, 2.5f);
+                await Cmd.CustomScaledWait(deathAnimLength/2.0f, deathAnimLength/2.0f);
+                DD2MonsterHelper.PlayDeathSpawnVfx();
+                await Cmd.CustomScaledWait(2.0f, 2.0f);
                 Death DeathMonster = (Death)ModelDb.Monster<Death>().ToMutable();
                 await CreatureCmd.Add(DeathMonster, target.CombatState, target.Side, null);
 

@@ -5,7 +5,7 @@ render_mode blend_mix;
 uniform float spread : hint_range(0.0, 1.5) = 0.5;
 uniform float size : hint_range(0.01, 5.0) = 0.5;
 uniform vec4 snow_color : source_color = vec4(1.0);
-uniform float snow_transparency: hint_range(-0.5, 1.0) = 0.2;
+uniform float snow_transparency: hint_range(0.0, 1.0) = 1.0;
 
 // Snow movement parameters
 uniform float speed : hint_range(0.0, 10.0) = 0.5;
@@ -54,7 +54,7 @@ void fragment() {
 
     float snow_intensity = clamp(length(snow_accumulation), 0.0, 1.0);
     vec4 snow_color_mod = snow_color;
-    snow_color_mod.a *= snow_intensity;
+    snow_color_mod.a *= snow_intensity * snow_transparency;
 
     COLOR = snow_color_mod;  // 直接输出白色雪花，不混合任何背景
 }

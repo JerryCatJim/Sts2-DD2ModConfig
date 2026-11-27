@@ -7,6 +7,7 @@ uniform float strength : hint_range(0.0, 2.0) = 1.4;
 uniform float gray_brightness : hint_range(0.0, 1.0) = 0.2;   // 0=完全变灰, 1=保持原色
 uniform vec3 gray_tint : source_color = vec3(0.9, 0.9, 0.9);
 uniform float brightness : hint_range(0.5, 3.0) = 0.9;         // 亮度系数，越大越亮
+uniform float gray_transparency : hint_range(0.0, 1.0) = 1.0;
 
 void fragment() {
     vec4 pixel = texture(SCREEN_TEXTURE, SCREEN_UV);
@@ -17,5 +18,6 @@ void fragment() {
         COLOR.rgb = mix(pixel.rgb, grayscale_value, range * (1.0 - gray_brightness));
         // 应用亮度系数
         COLOR.rgb *= brightness;
+		COLOR.a *= gray_transparency;
     }
 }

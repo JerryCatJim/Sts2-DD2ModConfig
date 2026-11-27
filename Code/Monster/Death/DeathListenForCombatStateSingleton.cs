@@ -22,4 +22,10 @@ public class DeathListenForCombatStateSingleton : CustomSingletonModel
             await PowerCmd.Apply<SpawnDeathPower>(new ThrowingPlayerChoiceContext(), creature, 1, null, null, true);
         }
     }
+
+    public static bool HasDeathSpawnVfx = false;
+    public static void ResetValue()
+    {
+        HasDeathSpawnVfx = false;
+    }
 }

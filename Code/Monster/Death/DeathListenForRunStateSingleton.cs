@@ -77,6 +77,8 @@ public class DeathListenForRunStateSingleton : CustomSingletonModel
         NAudioManager.Instance?.SetBgmVol(SaveManager.Instance.SettingsSave.VolumeBgm);
 
         ResetValue(false);
+        DeathListenForCombatStateSingleton.ResetValue();
+
         if (room is CombatRoom combatRoom)
         {
             CombatState = combatRoom.CombatState;
