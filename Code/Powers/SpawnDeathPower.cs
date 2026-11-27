@@ -62,10 +62,14 @@ public sealed class SpawnDeathPower : DD2ModConfigPowerModel
                 }
 
                 await Cmd.CustomScaledWait(deathAnimLength/2.0f, deathAnimLength/2.0f);
-                DD2MonsterHelper.PlayDeathSpawnVfx();
-                await Cmd.CustomScaledWait(2.0f, 2.0f);
+
                 Death DeathMonster = (Death)ModelDb.Monster<Death>().ToMutable();
                 await CreatureCmd.Add(DeathMonster, target.CombatState, target.Side, null);
+
+                DD2MonsterHelper.PlayDeathSpawnVfx(DeathMonster.Creature);
+                await Cmd.CustomScaledWait(2.0f, 2.0f);
+
+                await DeathMonster.SetVisibleAndPlaySpawnSfx();
 
                 //若在死神生成前清除CombatState残留怪物会生不出死神?
                 //直接在这里清除残留enemy会导致若排在SpawnDeathPower之后的Power里的AfterDeath想使用creature以及creature.CombatState时有概率因报空而报错卡死

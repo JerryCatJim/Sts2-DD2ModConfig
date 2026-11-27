@@ -36,6 +36,9 @@ public static class DeathAnimPatch
             case null:
                 break;
 
+            case "Spawn":
+                PlayAnim(__instance, "Spawn", true);
+                break;
             case "Dead":
                 PlayAnim(__instance, "Dead", true);
                 break;

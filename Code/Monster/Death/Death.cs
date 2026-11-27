@@ -74,6 +74,7 @@ public class Death : CustomMonsterModel, IGetDD2MonsterType
     // 如果你挂载了自己的自定义脚本，使用这个(挂了也用上面的，这个会卡死)
     //public override string? CustomVisualPath => "res://DD2ModConfig_Asset/Monster_Death/Death.tscn";
 
+    public bool ShouldPlayBgm = false;
     // 战斗开始时，在这里给自己上buff之类
     public override async Task AfterAddedToRoom()
     {
@@ -82,8 +83,8 @@ public class Death : CustomMonsterModel, IGetDD2MonsterType
         {
             DeathNode.Visible = false;
             DeathNode.GlobalPosition = new Vector2(1417, 739);
-            await Cmd.CustomScaledWait(0.1f, 0.1f);
-            DeathNode.Visible = true;
+            //await Cmd.CustomScaledWait(0.1f, 0.1f);
+            //DeathNode.Visible = true;
         }
 
         if (DeathListenForRunStateSingleton.IsDeathExistingInCombat == false)
@@ -91,16 +92,34 @@ public class Death : CustomMonsterModel, IGetDD2MonsterType
             //若多个死神同时出现只加载一次BGM
             if (DD2ModConfigCfg.ShouldPlayDeathEncounterBgm)
             {
-                DD2AudioManager.PlayDD2Bgm("Death");
+                //DD2AudioManager.PlayDD2Bgm("Death");
+                ShouldPlayBgm = true;
             }
         }
         DeathListenForRunStateSingleton.IsDeathExistingInCombat = true;
-        MonsterAudioManager.PlayDeathSfx("Spawn", true);
+        //MonsterAudioManager.PlayDeathSfx("Spawn", true);
 
         await PowerCmd.Apply<DeathArmorPower>(new ThrowingPlayerChoiceContext(), Creature, DeathArmorNum, Creature, null, true);
         if (ExtraEnhancedValue > 0)
         {
             await PowerCmd.Apply<StrengthPower>(new ThrowingPlayerChoiceContext(), Creature, ExtraEnhancedValue, Creature, null, true);
+        }
+    }
+
+    public async Task SetVisibleAndPlaySpawnSfx()
+    {
+        NCreature? DeathNode = NCombatRoom.Instance?.GetCreatureNode(base.Creature);
+        if (DeathNode != null)
+        {
+            await CreatureCmd.TriggerAnim(Creature, "Spawn", 0.0f);
+
+            DeathNode.Visible = true;  //在播放动画后再恢复可见，防止视觉上突然闪一下
+
+            if (ShouldPlayBgm)
+            {
+                DD2AudioManager.PlayDD2Bgm("Death");
+            }
+            MonsterAudioManager.PlayDeathSfx("Spawn", true);
         }
     }
 

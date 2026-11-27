@@ -5,6 +5,7 @@ using Godot;
 using MegaCrit.Sts2.Core.Assets;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Helpers;
+using MegaCrit.Sts2.Core.Nodes;
 using MegaCrit.Sts2.Core.Nodes.Combat;
 using MegaCrit.Sts2.Core.Nodes.Rooms;
 
@@ -34,8 +35,13 @@ public static class DD2MonsterHelper
     }
 
     private static Node2D? _deathSpawnVfxInstance;
-    public static void PlayDeathSpawnVfx()
+    public static void PlayDeathSpawnVfx(Creature creature)
     {
+        if (GodotObject.IsInstanceValid(_deathSpawnVfxInstance) && !_deathSpawnVfxInstance.IsQueuedForDeletion())
+        {
+            _deathSpawnVfxInstance.QueueFreeSafely();
+            _deathSpawnVfxInstance = null;
+        }
         //若多个死神同时出现只加载一次滤镜
         if (DeathListenForCombatStateSingleton.HasDeathSpawnVfx == false && DD2ModConfigCfg.ShouldShowDeathEncounterVfx)
         {
@@ -50,6 +56,12 @@ public static class DD2MonsterHelper
             {
                 animPlayer.Stop();
                 animPlayer.Play("Show");
+            }
+
+            NCreature? nCreature = NCombatRoom.Instance?.GetCreatureNode(creature);
+            if (nCreature != null)
+            {
+                FocusAndReturn(nCreature, new Vector2(1080, 450));
             }
 
             var combatRoom = NCombatRoom.Instance;
@@ -112,5 +124,94 @@ public static class DD2MonsterHelper
                 }
             };
         }
+    }
+    public static void FocusAndReturn(NCreature MonsterCreature, Vector2 targetLocal, float targetScale = 1.25f,
+        float zoomInDuration = 3.0f, float waitingDuration = 4.5f, float zoomOutDuration = 1.3f)
+    {
+        Control? layer = NCombatRoom.Instance?.SceneContainer;
+        if (!GodotObject.IsInstanceValid(layer) || !layer.IsInsideTree())
+        {
+            return;
+        }
+
+        // 1. 先解除震动
+        NGame.Instance?.ClearScreenShakeTarget();
+
+        // 保险起见，延迟一帧读取初始状态，确保 ClearScreenShakeTarget 产生的副作用已结算
+        Callable.From(() =>
+        {
+            if (!GodotObject.IsInstanceValid(layer)) return;
+
+            if (GodotObject.IsInstanceValid(MonsterCreature))
+            {
+                //不可交互，隐藏血条和意图
+                MonsterCreature.SetIsInteractable(false, true);
+                MonsterCreature.IntentContainer.Visible = false;
+            }
+
+            Vector2 originalScale = layer.Scale;
+            Vector2 originalPos = layer.Position;
+            Vector2 screenCenter = layer.Size / 2f;
+            Vector2 targetPos = originalPos + screenCenter - (targetLocal * targetScale);
+
+            // 第一次 Tween：拉近聚焦
+            var zoomInTween = layer.CreateTween().SetParallel(true);
+            zoomInTween.SetTrans(Tween.TransitionType.Sine).SetEase(Tween.EaseType.InOut);
+            zoomInTween.TweenProperty(layer, "scale", originalScale * targetScale, zoomInDuration);
+            zoomInTween.TweenProperty(layer, "position", targetPos, zoomInDuration);
+
+            zoomInTween.Finished += () =>
+            {
+                if (!GodotObject.IsInstanceValid(layer)) return;
+
+                var waitingTween = layer.CreateTween().SetParallel(true);
+                waitingTween.SetTrans(Tween.TransitionType.Sine).SetEase(Tween.EaseType.InOut);
+                waitingTween.TweenProperty(layer, "scale", originalScale * targetScale * 1.1f, waitingDuration);
+                waitingTween.TweenProperty(layer, "position", targetPos + (new Vector2(-60, 60) * originalScale), waitingDuration);
+                // 等待时间
+                waitingTween.Finished += () =>
+                {
+                    if (!GodotObject.IsInstanceValid(layer)) return;
+
+                    if (GodotObject.IsInstanceValid(MonsterCreature))
+                    {
+                        //提前恢复血条，血条恢复动画有一段淡入淡出的延迟
+                        MonsterCreature.AnimateInStateDisplayForCombatStart();
+                    }
+
+                    var zoomOutTween = layer.CreateTween().SetParallel(true);
+                    zoomOutTween.SetTrans(Tween.TransitionType.Sine).SetEase(Tween.EaseType.InOut);
+                    zoomOutTween.TweenProperty(layer, "scale", originalScale, zoomOutDuration);
+                    zoomOutTween.TweenProperty(layer, "position", originalPos, zoomOutDuration);
+
+                    // 监听复位结束
+                    zoomOutTween.Finished += () =>
+                    {
+                        if (!GodotObject.IsInstanceValid(layer)) return;
+
+                        if (GodotObject.IsInstanceValid(MonsterCreature))
+                        {
+                            //恢复可交互和意图
+                            MonsterCreature.SetIsInteractable(true, false);
+                            MonsterCreature.IntentContainer.Visible = true;
+                        }
+                        // 关键修复 1：强制精准复位（消除 Tween 产生的浮点数微小误差）
+                        // 防止 Control 的布局系统发现坐标不对而强行吸附
+                        layer.Scale = originalScale;
+                        layer.Position = originalPos;
+
+                        // 关键修复 2：延迟一帧再恢复屏幕震动
+                        // 防止震动系统在 Tween 结束的同一帧强行抢夺 Position，导致画面撕裂跳动
+                        Callable.From(() =>
+                        {
+                            if (GodotObject.IsInstanceValid(layer))
+                            {
+                                NGame.Instance?.SetScreenShakeTarget(layer);
+                            }
+                        }).CallDeferred();
+                    };
+                };
+            };
+        }).CallDeferred();
     }
 }

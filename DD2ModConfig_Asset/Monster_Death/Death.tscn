@@ -1,4 +1,4 @@
-[gd_scene load_steps=66 format=3 uid="uid://bsk2bex2vik0u"]
+[gd_scene load_steps=67 format=3 uid="uid://bsk2bex2vik0u"]
 
 [ext_resource type="Material" uid="uid://0i26vo7857ka" path="res://DD2ModConfig_Asset/Monster_Death/Shader/Rect_Clear_MAT.tres" id="1_55qdu"]
 [ext_resource type="AnimationLibrary" uid="uid://bwgjem6cbuqu" path="res://DD2ModConfig_Asset/Monster_Death/Death_AnimLib.tres" id="2_cwawx"]
@@ -221,9 +221,6 @@ transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_bi4if"]
 animation = &"shared_death_spawn"
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_23xe1"]
-advance_mode = 2
-
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_jnqev"]
 xfade_time = 0.5
 switch_mode = 2
@@ -258,6 +255,11 @@ xfade_time = 0.3
 switch_mode = 2
 advance_mode = 2
 
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_46cyu"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_h0iub"]
+advance_mode = 2
+
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_jnqev"]
 states/Attack/node = SubResource("AnimationNodeStateMachine_yxteo")
 states/Attack/position = Vector2(655, 45)
@@ -271,9 +273,9 @@ states/Idle/node = SubResource("AnimationNodeStateMachine_pkdjl")
 states/Idle/position = Vector2(501, 100)
 states/Spawn/node = SubResource("AnimationNodeAnimation_bi4if")
 states/Spawn/position = Vector2(344, 100)
-states/Start/position = Vector2(216, 100)
-transitions = ["Start", "Spawn", SubResource("AnimationNodeStateMachineTransition_23xe1"), "Spawn", "Idle", SubResource("AnimationNodeStateMachineTransition_jnqev"), "Idle", "Attack", SubResource("AnimationNodeStateMachineTransition_06o3x"), "Attack", "Idle", SubResource("AnimationNodeStateMachineTransition_bi4if"), "Hit", "Idle", SubResource("AnimationNodeStateMachineTransition_3v2fr"), "Idle", "Hit", SubResource("AnimationNodeStateMachineTransition_ao6me"), "Idle", "DeathDoorHit", SubResource("AnimationNodeStateMachineTransition_wadpr"), "DeathDoorHit", "Idle", SubResource("AnimationNodeStateMachineTransition_11wwl")]
-graph_offset = Vector2(22, -18)
+states/Start/position = Vector2(344, 179)
+transitions = ["Spawn", "Idle", SubResource("AnimationNodeStateMachineTransition_jnqev"), "Idle", "Attack", SubResource("AnimationNodeStateMachineTransition_06o3x"), "Attack", "Idle", SubResource("AnimationNodeStateMachineTransition_bi4if"), "Hit", "Idle", SubResource("AnimationNodeStateMachineTransition_3v2fr"), "Idle", "Hit", SubResource("AnimationNodeStateMachineTransition_ao6me"), "Idle", "DeathDoorHit", SubResource("AnimationNodeStateMachineTransition_wadpr"), "DeathDoorHit", "Idle", SubResource("AnimationNodeStateMachineTransition_11wwl"), "Idle", "Spawn", SubResource("AnimationNodeStateMachineTransition_46cyu"), "Start", "Idle", SubResource("AnimationNodeStateMachineTransition_h0iub")]
+graph_offset = Vector2(31, 7)
 
 [node name="Death" type="Node2D"]
 
