@@ -7,7 +7,9 @@ using DD2ModConfig.Code.Helper;
 using DD2ModConfig.Code.Powers;
 using DD2ModConfig.Code.Relics;
 using Godot;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
+using MegaCrit.Sts2.Core.Context;
 using MegaCrit.Sts2.Core.Entities.Ascension;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Players;
@@ -83,6 +85,15 @@ public class Death : CustomMonsterModel, IGetDD2MonsterType
         {
             DeathNode.Visible = false;
             DeathNode.GlobalPosition = new Vector2(1417, 739);
+            if (Creature.CombatState != null)
+            {
+                NCreature? playerNode = NCombatRoom.Instance?.GetCreatureNode(LocalContext.GetMe(Creature.CombatState)?.Creature);
+                if (playerNode != null)
+                {
+                    float newPosX = Math.Min(playerNode.GlobalPosition.X + 900, 1480);
+                    DeathNode.GlobalPosition = new Vector2(newPosX, playerNode.GlobalPosition.Y);
+                }
+            }
             //await Cmd.CustomScaledWait(0.1f, 0.1f);
             //DeathNode.Visible = true;
         }
@@ -111,9 +122,9 @@ public class Death : CustomMonsterModel, IGetDD2MonsterType
         NCreature? DeathNode = NCombatRoom.Instance?.GetCreatureNode(base.Creature);
         if (DeathNode != null)
         {
-            await CreatureCmd.TriggerAnim(Creature, "Spawn", 0.0f);
-
-            DeathNode.Visible = true;  //在播放动画后再恢复可见，防止视觉上突然闪一下
+            await CreatureCmd.TriggerAnim(Creature, "Spawn", 0.1f);
+            //给点延迟再恢复可见，防止视觉上突然闪一下
+            DeathNode.Visible = true;
 
             if (ShouldPlayBgm)
             {
@@ -121,6 +132,16 @@ public class Death : CustomMonsterModel, IGetDD2MonsterType
             }
             MonsterAudioManager.PlayDeathSfx("Spawn", true);
         }
+    }
+
+    public override Task BeforeSideTurnStart(PlayerChoiceContext choiceContext, CombatSide side, IReadOnlyList<Creature> participants, ICombatState combatState)
+    {
+        //防止播放死神聚焦效果时，玩家没等到播完立刻结束了自己回合而来到了怪物回合，此时应恢复镜头到原位
+        if (participants.Contains(Creature))
+        {
+            DD2MonsterHelper.ClearAllTweens();
+        }
+        return Task.CompletedTask;
     }
 
     public override async Task BeforeDeath(Creature creature)
@@ -150,6 +171,10 @@ public class Death : CustomMonsterModel, IGetDD2MonsterType
         if (DeathListenForRunStateSingleton.IsDeathExistingInCombat == false)
         {
             DeathListenForRunStateSingleton.DeathAppearTime++;
+
+            //防止死神没播完出场聚焦效果时就已经死亡(正常游玩过程中不可能发生)
+            DD2MonsterHelper.ClearAllTweens();
+
             await Cmd.CustomScaledWait(1f, 1f, true);
             DD2MonsterHelper.ClearDeathSpawnVfxAndBgm();
             await Cmd.CustomScaledWait(1f, 1f, true);

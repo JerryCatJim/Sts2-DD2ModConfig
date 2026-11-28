@@ -127,7 +127,6 @@ public static class DeathBgmPatch
 {
     public static void Postfix(double value)
     {
-        //从死神的战斗中退回到主界面会导致BGM音量为0，调一下滑动条就恢复正常了，没找到退回到主界面事件，懒得修了
         if (CombatManager.Instance.IsInProgress && DeathListenForRunStateSingleton.IsDeathExistingInCombat && DD2ModConfigCfg.ShouldPlayDeathEncounterBgm)
         {
             NAudioManager.Instance?.SetBgmVol(0);

@@ -33,7 +33,17 @@ public static class DD2MonsterHelper
             animationTree.Set("parameters/Idle/conditions/ToDeathIdle", toDeathIdle);
         }
     }
+    public static void ResetValue()
+    {
+        //战斗结束后会在DeathListenForCombatStateSingleton里调用此函数
+        //但不用清除_deathSpawnVfxInstance，因为击败死神后会手动调用ClearDeathSpawnVfxAndBgm
+        TweensList.Clear();
+        FocusedNCreatureSet.Clear();
+        _isFocusing = false;
+    }
 
+    public static readonly List<Tween> TweensList = new List<Tween>();
+    public static readonly HashSet<NCreature> FocusedNCreatureSet = new HashSet<NCreature>();
     private static Node2D? _deathSpawnVfxInstance;
     public static void PlayDeathSpawnVfx(Creature creature)
     {
@@ -61,7 +71,7 @@ public static class DD2MonsterHelper
             NCreature? nCreature = NCombatRoom.Instance?.GetCreatureNode(creature);
             if (nCreature != null)
             {
-                FocusAndReturn(nCreature, new Vector2(1080, 450));
+                FocusAndReturn(nCreature, new Vector2(1080, 420));
             }
 
             var combatRoom = NCombatRoom.Instance;
@@ -125,6 +135,8 @@ public static class DD2MonsterHelper
             };
         }
     }
+
+    private static bool _isFocusing = false;
     public static void FocusAndReturn(NCreature MonsterCreature, Vector2 targetLocal, float targetScale = 1.25f,
         float zoomInDuration = 3.0f, float waitingDuration = 4.5f, float zoomOutDuration = 1.3f)
     {
@@ -134,43 +146,51 @@ public static class DD2MonsterHelper
             return;
         }
 
+        _isFocusing = true;
         // 1. 先解除震动
         NGame.Instance?.ClearScreenShakeTarget();
 
         // 保险起见，延迟一帧读取初始状态，确保 ClearScreenShakeTarget 产生的副作用已结算
         Callable.From(() =>
         {
-            if (!GodotObject.IsInstanceValid(layer)) return;
+            if (!_isFocusing) return;
 
             if (GodotObject.IsInstanceValid(MonsterCreature))
             {
+                FocusedNCreatureSet.Add(MonsterCreature);
                 //不可交互，隐藏血条和意图
                 MonsterCreature.SetIsInteractable(false, true);
                 MonsterCreature.IntentContainer.Visible = false;
             }
 
-            Vector2 originalScale = layer.Scale;
-            Vector2 originalPos = layer.Position;
+            if (!GodotObject.IsInstanceValid(layer)) return;
+
+            Vector2 originalScale = DeathListenForCombatStateSingleton.CameraOriginalScale;//layer.Scale;
+            Vector2 originalPos = DeathListenForCombatStateSingleton.CameraOriginalPos;//layer.Position;
             Vector2 screenCenter = layer.Size / 2f;
             Vector2 targetPos = originalPos + screenCenter - (targetLocal * targetScale);
 
             // 第一次 Tween：拉近聚焦
             var zoomInTween = layer.CreateTween().SetParallel(true);
+            TweensList.Add(zoomInTween);
             zoomInTween.SetTrans(Tween.TransitionType.Sine).SetEase(Tween.EaseType.InOut);
             zoomInTween.TweenProperty(layer, "scale", originalScale * targetScale, zoomInDuration);
             zoomInTween.TweenProperty(layer, "position", targetPos, zoomInDuration);
 
             zoomInTween.Finished += () =>
             {
+                TweensList.Remove(zoomInTween);
                 if (!GodotObject.IsInstanceValid(layer)) return;
 
                 var waitingTween = layer.CreateTween().SetParallel(true);
+                TweensList.Add(waitingTween);
                 waitingTween.SetTrans(Tween.TransitionType.Sine).SetEase(Tween.EaseType.InOut);
                 waitingTween.TweenProperty(layer, "scale", originalScale * targetScale * 1.1f, waitingDuration);
                 waitingTween.TweenProperty(layer, "position", targetPos + (new Vector2(-60, 60) * originalScale), waitingDuration);
                 // 等待时间
                 waitingTween.Finished += () =>
                 {
+                    TweensList.Remove(waitingTween);
                     if (!GodotObject.IsInstanceValid(layer)) return;
 
                     if (GodotObject.IsInstanceValid(MonsterCreature))
@@ -180,6 +200,7 @@ public static class DD2MonsterHelper
                     }
 
                     var zoomOutTween = layer.CreateTween().SetParallel(true);
+                    TweensList.Add(zoomOutTween);
                     zoomOutTween.SetTrans(Tween.TransitionType.Sine).SetEase(Tween.EaseType.InOut);
                     zoomOutTween.TweenProperty(layer, "scale", originalScale, zoomOutDuration);
                     zoomOutTween.TweenProperty(layer, "position", originalPos, zoomOutDuration);
@@ -187,7 +208,9 @@ public static class DD2MonsterHelper
                     // 监听复位结束
                     zoomOutTween.Finished += () =>
                     {
-                        if (!GodotObject.IsInstanceValid(layer)) return;
+                        TweensList.Remove(zoomOutTween);
+
+                        _isFocusing = false;
 
                         if (GodotObject.IsInstanceValid(MonsterCreature))
                         {
@@ -195,6 +218,9 @@ public static class DD2MonsterHelper
                             MonsterCreature.SetIsInteractable(true, false);
                             MonsterCreature.IntentContainer.Visible = true;
                         }
+
+                        if (!GodotObject.IsInstanceValid(layer)) return;
+
                         // 关键修复 1：强制精准复位（消除 Tween 产生的浮点数微小误差）
                         // 防止 Control 的布局系统发现坐标不对而强行吸附
                         layer.Scale = originalScale;
@@ -213,5 +239,84 @@ public static class DD2MonsterHelper
                 };
             };
         }).CallDeferred();
+    }
+    public static void ClearAllTweens(bool immediately = false, float zoomOutDuration = 0.8f)
+    {
+        _isFocusing = false;
+
+        foreach (Tween? tween in TweensList)
+        {
+            if (GodotObject.IsInstanceValid(tween))
+            {
+                tween.Kill();
+            }
+        }
+        TweensList.Clear();
+
+        Control? layer = NCombatRoom.Instance?.SceneContainer;
+        if (!GodotObject.IsInstanceValid(layer) || !layer.IsInsideTree())
+        {
+            return;
+        }
+
+        Vector2 originalScale = DeathListenForCombatStateSingleton.CameraOriginalScale;
+        Vector2 originalPos = DeathListenForCombatStateSingleton.CameraOriginalPos;
+
+        foreach (NCreature? nCreature in FocusedNCreatureSet)
+        {
+            //恢复所有被聚焦中的怪物的可交互和意图，注意第二个参数填入true立刻恢复血条
+            if (GodotObject.IsInstanceValid(nCreature))
+            {
+                nCreature.SetIsInteractable(true, true);
+                nCreature.IntentContainer.Visible = true;
+            }
+        }
+        FocusedNCreatureSet.Clear();
+
+        void RestoreScreenShake()
+        {
+            Callable.From(() =>
+            {
+                if (GodotObject.IsInstanceValid(layer))
+                {
+                    NGame.Instance?.SetScreenShakeTarget(layer);
+                }
+            }).CallDeferred();
+        }
+
+        //完全一致则什么也不做
+        if (layer.Position == originalPos && layer.Scale == originalScale)
+        {
+            RestoreScreenShake();
+            return;
+        }
+
+        if (immediately)
+        {
+            layer.Scale = originalScale;
+            layer.Position = originalPos;
+            RestoreScreenShake();
+
+        }
+        else  //套了一层镜头Tween
+        {
+            var zoomOutTween = layer.CreateTween().SetParallel(true);
+            TweensList.Add(zoomOutTween);
+            zoomOutTween.SetTrans(Tween.TransitionType.Sine).SetEase(Tween.EaseType.InOut);
+            zoomOutTween.TweenProperty(layer, "scale", originalScale, zoomOutDuration);
+            zoomOutTween.TweenProperty(layer, "position", originalPos, zoomOutDuration);
+
+            // 监听复位结束
+            zoomOutTween.Finished += () =>
+            {
+                if (GodotObject.IsInstanceValid(layer))
+                {
+                    layer.Scale = originalScale;
+                    layer.Position = originalPos;
+                    RestoreScreenShake();
+                }
+                TweensList.Remove(zoomOutTween);
+            };
+        }
     }
 }

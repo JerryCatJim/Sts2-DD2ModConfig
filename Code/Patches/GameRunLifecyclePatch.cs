@@ -9,7 +9,10 @@ using MegaCrit.Sts2.Core.Entities.Players;
 using MegaCrit.Sts2.Core.Helpers;
 using MegaCrit.Sts2.Core.Logging;
 using MegaCrit.Sts2.Core.Models;
+using MegaCrit.Sts2.Core.Nodes.Audio;
+using MegaCrit.Sts2.Core.Nodes.Screens.MainMenu;
 using MegaCrit.Sts2.Core.Runs;
+using MegaCrit.Sts2.Core.Saves;
 
 namespace DD2ModConfig.Code.Patches;
 
@@ -67,5 +70,15 @@ public static class OnGameStartedFromSavePatch
                 }
             }
         }
+    }
+}
+
+[HarmonyPatch(typeof(NMainMenu), "_Ready")]
+public static class OnMainMenuReadyPatch
+{
+    public static void Postfix(NMainMenu __instance)
+    {
+        //与死神战斗过程中退出到主界面会导致游戏本体的BGM音量没被恢复，在这重置一下
+        NAudioManager.Instance?.SetBgmVol(SaveManager.Instance.SettingsSave.VolumeBgm);
     }
 }
