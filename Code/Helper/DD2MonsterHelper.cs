@@ -159,8 +159,9 @@ public static class DD2MonsterHelper
             {
                 FocusedNCreatureSet.Add(MonsterCreature);
                 //不可交互，隐藏血条和意图
-                MonsterCreature.SetIsInteractable(false, true);
-                MonsterCreature.IntentContainer.Visible = false;
+                /*MonsterCreature.SetIsInteractable(false, true);
+                MonsterCreature.IntentContainer.Visible = false;*/
+                SetMonsterInteractable(MonsterCreature, false, true);
             }
 
             if (!GodotObject.IsInstanceValid(layer)) return;
@@ -196,7 +197,8 @@ public static class DD2MonsterHelper
                     if (GodotObject.IsInstanceValid(MonsterCreature))
                     {
                         //提前恢复血条，血条恢复动画有一段淡入淡出的延迟
-                        MonsterCreature.AnimateInStateDisplayForCombatStart();
+                        //MonsterCreature.AnimateInStateDisplayForCombatStart();
+                        DoHealthBarFadeOutAnim(MonsterCreature);
                     }
 
                     var zoomOutTween = layer.CreateTween().SetParallel(true);
@@ -215,8 +217,9 @@ public static class DD2MonsterHelper
                         if (GodotObject.IsInstanceValid(MonsterCreature))
                         {
                             //恢复可交互和意图
-                            MonsterCreature.SetIsInteractable(true, false);
-                            MonsterCreature.IntentContainer.Visible = true;
+                            /*MonsterCreature.SetIsInteractable(true, false);
+                            MonsterCreature.IntentContainer.Visible = true;*/
+                            SetMonsterInteractable(MonsterCreature, true, false);
                         }
 
                         if (!GodotObject.IsInstanceValid(layer)) return;
@@ -267,8 +270,9 @@ public static class DD2MonsterHelper
             //恢复所有被聚焦中的怪物的可交互和意图，注意第二个参数填入true立刻恢复血条
             if (GodotObject.IsInstanceValid(nCreature))
             {
-                nCreature.SetIsInteractable(true, true);
-                nCreature.IntentContainer.Visible = true;
+                /*nCreature.SetIsInteractable(true, true);
+                nCreature.IntentContainer.Visible = true;*/
+                SetMonsterInteractable(nCreature, true, true);
             }
         }
         FocusedNCreatureSet.Clear();
@@ -318,5 +322,22 @@ public static class DD2MonsterHelper
                 TweensList.Remove(zoomOutTween);
             };
         }
+    }
+    private static void SetMonsterInteractable(NCreature nCreature, bool isVisible, bool immediately)
+    {
+#if STS2_AT_LEAST_0_113_0
+        nCreature.SetIsInteractable(isVisible, immediately);
+#elif STS2_AT_LEAST_0_111_0
+        nCreature.ToggleIsInteractable(isVisible);
+#endif
+        nCreature.IntentContainer.Visible = isVisible;
+    }
+    private static void DoHealthBarFadeOutAnim(NCreature nCreature)
+    {
+#if STS2_AT_LEAST_0_113_0
+        AnimateInStateDisplayForCombatStart();
+#elif STS2_AT_LEAST_0_111_0
+        //Do nothing.
+#endif
     }
 }
