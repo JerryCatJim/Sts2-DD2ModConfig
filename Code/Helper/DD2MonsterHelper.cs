@@ -325,7 +325,7 @@ public static class DD2MonsterHelper
     }
     private static void SetMonsterInteractable(NCreature nCreature, bool isVisible, bool immediately)
     {
-#if STS2_AT_LEAST_0_113_0
+#if STS2_AT_LEAST_0_114_0
         nCreature.SetIsInteractable(isVisible, immediately);
 #elif STS2_AT_LEAST_0_111_0
         nCreature.ToggleIsInteractable(isVisible);
@@ -334,8 +334,8 @@ public static class DD2MonsterHelper
     }
     private static void DoHealthBarFadeOutAnim(NCreature nCreature)
     {
-#if STS2_AT_LEAST_0_113_0
-        AnimateInStateDisplayForCombatStart();
+#if STS2_AT_LEAST_0_114_0
+        nCreature.AnimateInStateDisplayForCombatStart();
 #elif STS2_AT_LEAST_0_111_0
         //Do nothing.
 #endif
